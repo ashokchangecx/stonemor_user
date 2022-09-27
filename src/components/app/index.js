@@ -145,7 +145,7 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <Dialog
+      {/* <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"
@@ -168,7 +168,7 @@ function App() {
             Add
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       <MuiThemeProvider theme={theme}>
         <BrowserRouter>
           {/* <AppBar position="sticky" className={classes.appbar}>
