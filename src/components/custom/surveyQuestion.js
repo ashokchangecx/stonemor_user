@@ -8,17 +8,19 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { createResponses, createSurveyEntries } from "../../graphql/mutations";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+
 import {
+  AppBar,
   Box,
   Button,
   Checkbox,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -27,6 +29,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Toolbar,
   Typography,
 } from "@material-ui/core";
 
@@ -55,7 +58,7 @@ const useStyles = makeStyles((theme) =>
     cont: {
       display: "flex",
       flexDirection: "column",
-      gap: "100px",
+      gap: "10px",
       justifyContent: "center",
       alignItems: "center",
     },
@@ -69,12 +72,24 @@ const useStyles = makeStyles((theme) =>
     },
     loadCenter: {
       display: "flex",
-      marginTop: "30px",
+      marginTop: "16rem",
       justifyContent: "center",
       alignItems: "center",
     },
+    progressBar: {
+      with: "20%",
+    },
   })
 );
+const styles = {
+  paperContainer: {
+    backgroundRepeat: "no-repeat",
+    backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
+    backgroundSize: "cover",
+    minHeight: "100vh",
+  },
+};
+const startTime = new Date().toISOString();
 
 const SurveyQuestion = (props) => {
   const location = useLocation();
@@ -84,7 +99,7 @@ const SurveyQuestion = (props) => {
   const {
     data: { loading, error, getQuestionnaire },
   } = props.getQuestionnaire;
-
+  console.log("getQuestionnaire", getQuestionnaire);
   const questions = getQuestionnaire?.question?.items;
   const firstQuestion =
     questions?.find((q) => q?.order === 1) ||
@@ -92,37 +107,55 @@ const SurveyQuestion = (props) => {
   const lastQuestion = questions?.sort((a, b) => a?.order - b?.order)[
     questions?.length - 1
   ];
+
   const [currentQuestion, setCurrentQuestion] = useState(firstQuestion);
   const [currentAnswer, setCurrentAnswer] = useState("");
+
   const [ANSLIST, setANSLIST] = useState([]);
-  const [checked, setChecked] = React.useState([]);
+
+  const [check, setCheck] = React.useState([]);
   const [final, setFinal] = React.useState(false);
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
   const [open, setOpen] = React.useState(true);
+
+  console.log("startTime : ", startTime);
   const onValueChange = (event, newValue) => {
     setCurrentAnswer(newValue);
   };
+  const value = currentQuestion?.order - 1;
+  // console.log("valuie", value);
+  const normalise = () => ((value - MIN) * 100) / (MAX - MIN);
+  const MIN = 0;
+
+  // console.log("MIN", MIN);
+  const MAX = getQuestionnaire?.question?.items?.length;
+  // console.log("MAX", MAX);
+
   const handleClose = () => {
     setOpen(false);
   };
   const handleChange = (e) => {
-    var temp = checked;
+    var temp = check;
+    console.log("CHANGE", e.target);
     if (e.target.checked === false) {
       temp = temp.filter((a) => {
         return a !== e.target.value;
       });
     }
     e.target.checked
-      ? setChecked([...checked, e.target.value])
-      : setChecked([...temp]);
-    setCurrentAnswer(checked);
+      ? setCheck([...check, e.target.value])
+      : setCheck([...temp]);
   };
+
   const handleFinish = async (event) => {
     event.preventDefault();
     setIsPostingResponse(true);
-    const dummyRes = await props.onCreateSurveyEntries({
+    await props.onCreateSurveyEntries({
       id: group,
-      by: params?.get("uid"),
+      startTime: startTime,
+      finishTime: new Date().toISOString(),
+      questionnaireId: getQuestionnaire?.id,
+      surveyEntriesById: params?.get("uid"),
     });
     await Promise.all(
       [
@@ -223,6 +256,7 @@ const SurveyQuestion = (props) => {
       );
     }
     setCurrentAnswer("");
+    setCheck("");
   };
 
   const handlePreviousClick = () => {
@@ -237,6 +271,7 @@ const SurveyQuestion = (props) => {
     }
     setANSLIST(ANSLIST.slice(0, -1));
   };
+
   const getQuestionView = (q) => {
     switch (q?.type) {
       case "RADIO":
@@ -260,7 +295,7 @@ const SurveyQuestion = (props) => {
               value={currentAnswer}
               onChange={onValueChange}
             >
-              {q?.listOptions.map((option, o) => (
+              {q?.listOptions?.map((option, o) => (
                 <FormControlLabel
                   key={o}
                   value={option?.listValue}
@@ -316,7 +351,7 @@ const SurveyQuestion = (props) => {
               value={currentAnswer}
               onChange={onValueChange}
             >
-              {q?.listOptions.map((option, o) => (
+              {q?.listOptions?.map((option, o) => (
                 <FormControlLabel
                   key={o}
                   value={option?.listValue}
@@ -353,12 +388,17 @@ const SurveyQuestion = (props) => {
                 </Typography>
               </FormLabel>
 
-              {q?.listOptions.map((option, o) => (
+              {q?.listOptions?.map((option, o) => (
                 <FormControlLabel
                   key={o}
                   value={currentAnswer}
-                  onChange={handleChange}
-                  control={<Checkbox key={o} value={option?.listValue} />}
+                  control={
+                    <Checkbox
+                      key={o}
+                      value={option?.listValue}
+                      onChange={handleChange}
+                    />
+                  }
                   label={option?.listValue}
                 />
               ))}
@@ -385,7 +425,7 @@ const SurveyQuestion = (props) => {
                 </Typography>
               </FormLabel>
 
-              {q?.listOptions.map((option, o) => (
+              {q?.listOptions?.map((option, o) => (
                 <FormControlLabel
                   key={o}
                   value={currentAnswer}
@@ -417,15 +457,18 @@ const SurveyQuestion = (props) => {
           </FormControl>
         );
       default:
-        return (
-          <Typography sx={{ paddingTop: 2 }}>
-            {" "}
-            Q.
-            {q?.qu}
-          </Typography>
-        );
+        return <p>Q. {q?.qu}</p>;
     }
   };
+
+  useEffect(() => {
+    if (
+      currentQuestion?.type === "CHECKBOX" ||
+      currentQuestion?.type === "CHECKBOXWITHTEXT"
+    ) {
+      setCurrentAnswer(check);
+    }
+  }, [check]);
 
   useEffect(() => {
     if (questions?.length > 0) {
@@ -444,6 +487,8 @@ const SurveyQuestion = (props) => {
       }
     }
   }, [currentQuestion]);
+  // console.log("Demo", ANSLIST, currentAnswer, check);
+
   // console.log("ANSLIST", params?.get("uid"));
 
   if (loading) {
@@ -455,11 +500,22 @@ const SurveyQuestion = (props) => {
   }
   if (isPostingResponse) {
     return (
-      <div className={classes.loadCenter}>
-        <CircularProgress className={classes.progress} />
-        <Typography variant="h5" component="h3">
-          Posting Responses.Please wait...
-        </Typography>
+      <div style={styles.paperContainer}>
+        <AppBar position="sticky">
+          <Toolbar>
+            <img
+              src="https://dynamix-cdn.s3.amazonaws.com/stonemorcom/stonemorcom_616045937.svg"
+              alt="logo"
+              className={classes.logo}
+            />
+          </Toolbar>
+        </AppBar>
+        <div className={classes.loadCenter}>
+          <CircularProgress className={classes.progress} />
+          <Typography variant="h5" component="h3">
+            Posting Responses.Please wait...
+          </Typography>
+        </div>
       </div>
     );
   }
@@ -481,7 +537,16 @@ const SurveyQuestion = (props) => {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={styles.paperContainer}>
+      <AppBar position="stickey">
+        <div style={{ justifyContent: "center", alignItems: "center" }}>
+          <img
+            src="https://dynamix-cdn.s3.amazonaws.com/stonemorcom/stonemorcom_616045937.svg"
+            alt="logo"
+            className={classes.logo}
+          />
+        </div>
+      </AppBar>
       <Dialog
         open={open}
         aria-labelledby="alert-dialog-title"
@@ -489,8 +554,11 @@ const SurveyQuestion = (props) => {
       >
         <DialogTitle id="alert-dialog-title">{"Stonemor"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Welcome to {getQuestionnaire?.name}. Click continue to attend survey.
+          <DialogContentText
+          // id="alert-dialog-description"
+          >
+            Welcome to {getQuestionnaire?.name}. Click continue to attend
+            survey.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -499,11 +567,7 @@ const SurveyQuestion = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <img
-        src="https://dynamix-cdn.s3.amazonaws.com/stonemorcom/stonemorcom_616045937.svg"
-        alt="logo"
-        className={classes.logo}
-      />
+
       <Container maxWidth="md">
         <Typography className={classes.custom} variant="h5">
           {getQuestionnaire?.name}
@@ -555,6 +619,47 @@ const SurveyQuestion = (props) => {
           </Box>
         </div>
       </Container>
+
+      {/* <div>
+      <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
+        <Box width="20%" mr={1}>
+          <LinearProgress
+            variant="determinate"
+            value={normalise(props.value)}
+          />
+        </Box>
+        <Box minWidth={35}>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(
+            normalise(props.value)
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    </div> */}
+      <div
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "center",
+          marginRight: "3rem",
+        }}
+      >
+        <Box display="flex" alignItems="center" justifyContent="end">
+          <Box width="0%" mr={2.5}>
+            <CircularProgress
+              variant="determinate"
+              value={normalise(props.value)}
+              size="5rem"
+              thickness={5}
+            />
+          </Box>
+          <Box minWidth={40}>
+            <Typography variant="h5" color="textSecondary">{`${Math.round(
+              normalise(props.value)
+            )}%`}</Typography>
+          </Box>
+        </Box>
+      </div>
     </div>
   );
 };
