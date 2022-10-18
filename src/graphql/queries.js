@@ -120,6 +120,7 @@ export const getQuestionnaire = /* GraphQL */ `
       id
       name
       description
+      image
       type
       createdAt
       updatedAt
@@ -305,6 +306,12 @@ export const getResponses = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        location {
+          id
+          location
+          createdAt
+          updatedAt
+        }
       }
     }
   }
@@ -369,6 +376,12 @@ export const getSurveyEntries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      location {
+        id
+        location
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -387,28 +400,18 @@ export const listSurveyEntriess = /* GraphQL */ `
         createdAt
         updatedAt
         responses {
-          items {
-            id
-            res
-            createdAt
-            updatedAt
-            qu {
-              id
-              qu
-              type
-              isSelf
-              isDependent
-              order
-              createdAt
-              updatedAt
-            }
-          }
           nextToken
         }
         by {
           id
           name
           email
+          createdAt
+          updatedAt
+        }
+        location {
+          id
+          location
           createdAt
           updatedAt
         }
@@ -439,6 +442,33 @@ export const listSurveyUsers = /* GraphQL */ `
         id
         name
         email
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getSurveyLocation = /* GraphQL */ `
+  query GetSurveyLocation($id: ID!) {
+    getSurveyLocation(id: $id) {
+      id
+      location
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listSurveyLocations = /* GraphQL */ `
+  query ListSurveyLocations(
+    $filter: ModelSurveyLocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSurveyLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        location
         createdAt
         updatedAt
       }

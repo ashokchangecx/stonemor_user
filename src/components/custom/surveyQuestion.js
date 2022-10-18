@@ -156,6 +156,7 @@ const SurveyQuestion = (props) => {
       finishTime: new Date().toISOString(),
       questionnaireId: getQuestionnaire?.id,
       surveyEntriesById: params?.get("uid"),
+      surveyEntriesLocationId: params?.get("uid"),
     });
     await Promise.all(
       [
@@ -567,7 +568,32 @@ const SurveyQuestion = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-
+      <div
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "center",
+          marginRight: "3rem",
+          marginTop: "3rem",
+        }}
+      >
+        <Box display="flex" alignItems="center" justifyContent="end">
+          <Box width="0%" mr={2.5}>
+            <CircularProgress
+              variant="determinate"
+              value={normalise(props.value)}
+              size="5rem"
+              thickness={5}
+            />
+          </Box>
+          <Box minWidth={40}>
+            <Typography variant="h5" color="textSecondary">{`${Math.round(
+              normalise(props.value)
+            )}%`}</Typography>
+          </Box>
+        </Box>
+      </div>
       <Container maxWidth="md">
         <Typography className={classes.custom} variant="h5">
           {getQuestionnaire?.name}
@@ -635,7 +661,7 @@ const SurveyQuestion = (props) => {
         </Box>
       </Box>
     </div> */}
-      <div
+      {/* <div
         style={{
           // do your styles depending on your needs.
           display: "flex",
@@ -659,7 +685,7 @@ const SurveyQuestion = (props) => {
             )}%`}</Typography>
           </Box>
         </Box>
-      </div>
+      </div> */}
     </div>
   );
 };

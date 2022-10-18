@@ -456,6 +456,12 @@ export const createResponses = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        location {
+          id
+          location
+          createdAt
+          updatedAt
+        }
       }
     }
   }
@@ -512,6 +518,12 @@ export const updateResponses = /* GraphQL */ `
           id
           name
           email
+          createdAt
+          updatedAt
+        }
+        location {
+          id
+          location
           createdAt
           updatedAt
         }
@@ -574,6 +586,12 @@ export const deleteResponses = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        location {
+          id
+          location
+          createdAt
+          updatedAt
+        }
       }
     }
   }
@@ -603,6 +621,12 @@ export const createSurveyEntries = /* GraphQL */ `
         id
         name
         email
+        createdAt
+        updatedAt
+      }
+      location {
+        id
+        location
         createdAt
         updatedAt
       }
@@ -637,6 +661,12 @@ export const updateSurveyEntries = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      location {
+        id
+        location
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -665,6 +695,12 @@ export const deleteSurveyEntries = /* GraphQL */ `
         id
         name
         email
+        createdAt
+        updatedAt
+      }
+      location {
+        id
+        location
         createdAt
         updatedAt
       }
@@ -708,6 +744,45 @@ export const deleteSurveyUser = /* GraphQL */ `
       id
       name
       email
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createSurveyLocation = /* GraphQL */ `
+  mutation CreateSurveyLocation(
+    $input: CreateSurveyLocationInput!
+    $condition: ModelSurveyLocationConditionInput
+  ) {
+    createSurveyLocation(input: $input, condition: $condition) {
+      id
+      location
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateSurveyLocation = /* GraphQL */ `
+  mutation UpdateSurveyLocation(
+    $input: UpdateSurveyLocationInput!
+    $condition: ModelSurveyLocationConditionInput
+  ) {
+    updateSurveyLocation(input: $input, condition: $condition) {
+      id
+      location
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteSurveyLocation = /* GraphQL */ `
+  mutation DeleteSurveyLocation(
+    $input: DeleteSurveyLocationInput!
+    $condition: ModelSurveyLocationConditionInput
+  ) {
+    deleteSurveyLocation(input: $input, condition: $condition) {
+      id
+      location
       createdAt
       updatedAt
     }

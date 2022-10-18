@@ -21,7 +21,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 const styles = {
   paperContainer: {
     backgroundRepeat: "no-repeat",
-    backgroundImage: `url('https://wallpaperaccess.com/full/1454447.jpg')`,
+    backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
     backgroundSize: "cover",
     minHeight: "100vh",
   },
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) =>
       marginLeft: "40%",
     },
     textcolor: {
-      color: "#fafafa",
+      // color: "#fafafa",
     },
   })
 );
