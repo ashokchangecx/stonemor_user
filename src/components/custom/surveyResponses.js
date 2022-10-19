@@ -48,7 +48,7 @@ const surveyResponsesPart = (props) => {
   const {
     data: { listResponsess },
   } = props.listResponsess;
-  console.log("listResponsess", props);
+  // console.log("listResponsess", props);
   return (
     <div className={classes.root}>
       <AdminMenu />

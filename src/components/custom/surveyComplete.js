@@ -89,7 +89,7 @@ const SurveyComplete = (props) => {
 
           <ThemeProvider theme={theme}>
             <Typography variant="h3" className={classes.textcolor}>
-              Thankyou for Your Participation
+              Thankyou for Your Participation.
             </Typography>
             <Typography variant="h3" className={classes.textcolor}>
               {" "}

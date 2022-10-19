@@ -118,7 +118,7 @@ const SurveyQuestion = (props) => {
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
   const [open, setOpen] = React.useState(true);
 
-  console.log("startTime : ", startTime);
+  // console.log("startTime : ", startTime);
   const onValueChange = (event, newValue) => {
     setCurrentAnswer(newValue);
   };
