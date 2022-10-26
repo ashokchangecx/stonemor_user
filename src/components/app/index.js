@@ -38,7 +38,7 @@ import SurveyResponses from "../custom/surveyResponses";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#5E8ABF",
+      main: "#4776a9",
     },
     secondary: indigo,
   },

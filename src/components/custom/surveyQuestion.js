@@ -7,6 +7,7 @@ import { getQuestionnaire } from "../../graphql/queries";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import logo1 from "../../assets/MemorialPlanning - Wide - Tag - 4C (2) (1).png";
 import { createResponses, createSurveyEntries } from "../../graphql/mutations";
 
 import {
@@ -84,7 +85,7 @@ const useStyles = makeStyles((theme) =>
 const styles = {
   paperContainer: {
     backgroundRepeat: "no-repeat",
-    backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
+    // backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
     backgroundSize: "cover",
     minHeight: "100vh",
   },
@@ -118,7 +119,7 @@ const SurveyQuestion = (props) => {
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
   const [open, setOpen] = React.useState(true);
 
-  // console.log("startTime : ", startTime);
+  console.log("startTime : ", startTime);
   const onValueChange = (event, newValue) => {
     setCurrentAnswer(newValue);
   };
@@ -504,11 +505,7 @@ const SurveyQuestion = (props) => {
       <div style={styles.paperContainer}>
         <AppBar position="sticky">
           <Toolbar>
-            <img
-              src="https://dynamix-cdn.s3.amazonaws.com/stonemorcom/stonemorcom_616045937.svg"
-              alt="logo"
-              className={classes.logo}
-            />
+            <img src={logo1} alt="logo" className={classes.logo} />
           </Toolbar>
         </AppBar>
         <div className={classes.loadCenter}>
@@ -541,11 +538,7 @@ const SurveyQuestion = (props) => {
     <div className={classes.root} style={styles.paperContainer}>
       <AppBar position="stickey">
         <div style={{ justifyContent: "center", alignItems: "center" }}>
-          <img
-            src="https://dynamix-cdn.s3.amazonaws.com/stonemorcom/stonemorcom_616045937.svg"
-            alt="logo"
-            className={classes.logo}
-          />
+          <img src={logo1} alt="logo" className={classes.logo} />
         </div>
       </AppBar>
       <Dialog

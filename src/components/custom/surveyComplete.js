@@ -1,6 +1,6 @@
 import React from "react";
 import { withApollo } from "react-apollo";
-
+import logo from "../../assets/MemorialPlanning - Wide - Tag - 4C (2) (1).png";
 import {
   createStyles,
   makeStyles,
@@ -72,11 +72,7 @@ const SurveyComplete = (props) => {
     <div style={styles.paperContainer}>
       <AppBar position="sticky">
         <Toolbar>
-          <img
-            src="https://dynamix-cdn.s3.amazonaws.com/stonemorcom/stonemorcom_616045937.svg"
-            alt="logo"
-            className={classes.logo}
-          />
+          <img src={logo} alt="logo" className={classes.logo} />
         </Toolbar>
       </AppBar>
       <div className={classes.text}>
@@ -89,11 +85,12 @@ const SurveyComplete = (props) => {
 
           <ThemeProvider theme={theme}>
             <Typography variant="h3" className={classes.textcolor}>
-              Thankyou for Your Participation.
+              Thank you for completin our survey.
             </Typography>
             <Typography variant="h3" className={classes.textcolor}>
               {" "}
-              Your Survey is Completed
+              if you have requested a fellow up,someone will be in touch with
+              you soon.
             </Typography>
           </ThemeProvider>
         </Box>
