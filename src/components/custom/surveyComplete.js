@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) =>
     img: {
       width: 100,
       height: 100,
-      marginLeft: "40%",
     },
     textcolor: {
       // color: "#fafafa",
@@ -76,21 +75,28 @@ const SurveyComplete = (props) => {
         </Toolbar>
       </AppBar>
       <div className={classes.text}>
-        <Box sx={{ width: "300", height: "300" }} alignItems="center">
-          <img
-            src="https://www.freeiconspng.com/thumbs/success-icon/success-icon-10.png"
-            className={classes.img}
-            alt="success"
-          />
+        <Box
+          sx={{ width: "300", height: "300", padding: "5px 40px" }}
+          alignItems="center"
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src="https://www.freeiconspng.com/thumbs/success-icon/success-icon-10.png"
+              className={classes.img}
+              alt="success"
+            />
+          </div>
 
           <ThemeProvider theme={theme}>
             <Typography variant="h3" className={classes.textcolor}>
-              Thank you for completin our survey.
-            </Typography>
-            <Typography variant="h3" className={classes.textcolor}>
-              {" "}
-              if you have requested a fellow up,someone will be in touch with
-              you soon.
+              Thank you for completing our survey. If you have requested a
+              follow up,someone will be in touch with you soon.
             </Typography>
           </ThemeProvider>
         </Box>
