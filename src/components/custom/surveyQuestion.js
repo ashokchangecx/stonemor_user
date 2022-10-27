@@ -503,7 +503,7 @@ const SurveyQuestion = (props) => {
   if (isPostingResponse) {
     return (
       <div style={styles.paperContainer}>
-        <AppBar position="sticky">
+        <AppBar position="sticky" style={{ backgroundColor: "#b8d5f51c" }}>
           <Toolbar>
             <img src={logo1} alt="logo" className={classes.logo} />
           </Toolbar>
@@ -536,7 +536,7 @@ const SurveyQuestion = (props) => {
 
   return (
     <div className={classes.root} style={styles.paperContainer}>
-      <AppBar position="stickey">
+      <AppBar position="stickey" style={{ backgroundColor: "#b8d5f51c" }}>
         <div style={{ justifyContent: "center", alignItems: "center" }}>
           <img src={logo1} alt="logo" className={classes.logo} />
         </div>

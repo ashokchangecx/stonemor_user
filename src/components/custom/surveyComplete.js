@@ -21,7 +21,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 const styles = {
   paperContainer: {
     backgroundRepeat: "no-repeat",
-    backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
+    // backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
     backgroundSize: "cover",
     minHeight: "100vh",
   },
@@ -69,7 +69,7 @@ const SurveyComplete = (props) => {
 
   return (
     <div style={styles.paperContainer}>
-      <AppBar position="sticky">
+      <AppBar position="sticky" style={{ backgroundColor: "#b8d5f51c" }}>
         <Toolbar>
           <img src={logo} alt="logo" className={classes.logo} />
         </Toolbar>
