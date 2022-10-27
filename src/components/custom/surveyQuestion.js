@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) =>
     },
     logo: {
       maxWidth: 300,
-      paddingTop: 14,
+      paddingTop: 2,
     },
     loadCenter: {
       display: "flex",
@@ -503,7 +503,7 @@ const SurveyQuestion = (props) => {
   if (isPostingResponse) {
     return (
       <div style={styles.paperContainer}>
-        <AppBar position="sticky" style={{ backgroundColor: "#b8d5f51c" }}>
+        <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
           <Toolbar>
             <img src={logo1} alt="logo" className={classes.logo} />
           </Toolbar>
@@ -536,7 +536,7 @@ const SurveyQuestion = (props) => {
 
   return (
     <div className={classes.root} style={styles.paperContainer}>
-      <AppBar position="stickey" style={{ backgroundColor: "#b8d5f51c" }}>
+      <AppBar position="stickey" style={{ backgroundColor: "#fff" }}>
         <div style={{ justifyContent: "center", alignItems: "center" }}>
           <img src={logo1} alt="logo" className={classes.logo} />
         </div>
@@ -568,7 +568,7 @@ const SurveyQuestion = (props) => {
           justifyContent: "end",
           alignItems: "center",
           marginRight: "3rem",
-          marginTop: "3rem",
+          marginTop: "10px",
         }}
       >
         <Box display="flex" alignItems="center" justifyContent="end">
@@ -576,12 +576,12 @@ const SurveyQuestion = (props) => {
             <CircularProgress
               variant="determinate"
               value={normalise(props.value)}
-              size="5rem"
+              size="4.75rem"
               thickness={5}
             />
           </Box>
           <Box minWidth={40}>
-            <Typography variant="h5" color="textSecondary">{`${Math.round(
+            <Typography variant="h6" color="textSecondary">{`${Math.round(
               normalise(props.value)
             )}%`}</Typography>
           </Box>

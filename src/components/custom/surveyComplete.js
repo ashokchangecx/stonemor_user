@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) =>
     },
     logo: {
       maxWidth: 300,
-      paddingTop: 14,
+      paddingTop: 2,
     },
     text: {
       marginTop: 100,
@@ -69,7 +69,7 @@ const SurveyComplete = (props) => {
 
   return (
     <div style={styles.paperContainer}>
-      <AppBar position="sticky" style={{ backgroundColor: "#b8d5f51c" }}>
+      <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
         <Toolbar>
           <img src={logo} alt="logo" className={classes.logo} />
         </Toolbar>

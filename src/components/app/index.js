@@ -147,7 +147,7 @@ function App() {
   });
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ backgroundColor: "#a5edfe36" }}>
       {/* <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
