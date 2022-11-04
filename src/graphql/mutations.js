@@ -49,8 +49,20 @@ export const createSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -61,8 +73,20 @@ export const createSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -73,11 +97,37 @@ export const createSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
+      }
+      questionnaire {
+        items {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
     }
   }
@@ -102,8 +152,20 @@ export const updateSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -114,8 +176,20 @@ export const updateSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -126,11 +200,37 @@ export const updateSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
+      }
+      questionnaire {
+        items {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
     }
   }
@@ -155,8 +255,20 @@ export const deleteSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -167,8 +279,20 @@ export const deleteSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -179,11 +303,37 @@ export const deleteSurvey = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
+      }
+      questionnaire {
+        items {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
     }
   }
@@ -199,8 +349,56 @@ export const createQuestionnaire = /* GraphQL */ `
       description
       image
       type
+      introMsg
+      endMsg
       createdAt
       updatedAt
+      survey {
+        id
+        name
+        description
+        image
+        archived
+        groups
+        createdAt
+        updatedAt
+        preQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        mainQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        postQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        questionnaire {
+          nextToken
+        }
+      }
       question {
         items {
           id
@@ -228,8 +426,56 @@ export const updateQuestionnaire = /* GraphQL */ `
       description
       image
       type
+      introMsg
+      endMsg
       createdAt
       updatedAt
+      survey {
+        id
+        name
+        description
+        image
+        archived
+        groups
+        createdAt
+        updatedAt
+        preQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        mainQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        postQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        questionnaire {
+          nextToken
+        }
+      }
       question {
         items {
           id
@@ -257,8 +503,56 @@ export const deleteQuestionnaire = /* GraphQL */ `
       description
       image
       type
+      introMsg
+      endMsg
       createdAt
       updatedAt
+      survey {
+        id
+        name
+        description
+        image
+        archived
+        groups
+        createdAt
+        updatedAt
+        preQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        mainQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        postQuestionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          endMsg
+          createdAt
+          updatedAt
+        }
+        questionnaire {
+          nextToken
+        }
+      }
       question {
         items {
           id
@@ -308,8 +602,20 @@ export const createQuestion = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -350,8 +656,20 @@ export const updateQuestion = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -392,8 +710,20 @@ export const deleteQuestion = /* GraphQL */ `
         description
         image
         type
+        introMsg
+        endMsg
         createdAt
         updatedAt
+        survey {
+          id
+          name
+          description
+          image
+          archived
+          groups
+          createdAt
+          updatedAt
+        }
         question {
           nextToken
         }
@@ -435,6 +765,8 @@ export const createResponses = /* GraphQL */ `
           description
           image
           type
+          introMsg
+          endMsg
           createdAt
           updatedAt
         }
@@ -459,6 +791,7 @@ export const createResponses = /* GraphQL */ `
         location {
           id
           location
+          inchargeEmail
           createdAt
           updatedAt
         }
@@ -500,6 +833,8 @@ export const updateResponses = /* GraphQL */ `
           description
           image
           type
+          introMsg
+          endMsg
           createdAt
           updatedAt
         }
@@ -524,6 +859,7 @@ export const updateResponses = /* GraphQL */ `
         location {
           id
           location
+          inchargeEmail
           createdAt
           updatedAt
         }
@@ -565,6 +901,8 @@ export const deleteResponses = /* GraphQL */ `
           description
           image
           type
+          introMsg
+          endMsg
           createdAt
           updatedAt
         }
@@ -589,6 +927,7 @@ export const deleteResponses = /* GraphQL */ `
         location {
           id
           location
+          inchargeEmail
           createdAt
           updatedAt
         }
@@ -627,6 +966,7 @@ export const createSurveyEntries = /* GraphQL */ `
       location {
         id
         location
+        inchargeEmail
         createdAt
         updatedAt
       }
@@ -664,6 +1004,7 @@ export const updateSurveyEntries = /* GraphQL */ `
       location {
         id
         location
+        inchargeEmail
         createdAt
         updatedAt
       }
@@ -701,6 +1042,7 @@ export const deleteSurveyEntries = /* GraphQL */ `
       location {
         id
         location
+        inchargeEmail
         createdAt
         updatedAt
       }
@@ -757,6 +1099,7 @@ export const createSurveyLocation = /* GraphQL */ `
     createSurveyLocation(input: $input, condition: $condition) {
       id
       location
+      inchargeEmail
       createdAt
       updatedAt
     }
@@ -770,6 +1113,7 @@ export const updateSurveyLocation = /* GraphQL */ `
     updateSurveyLocation(input: $input, condition: $condition) {
       id
       location
+      inchargeEmail
       createdAt
       updatedAt
     }
@@ -783,6 +1127,7 @@ export const deleteSurveyLocation = /* GraphQL */ `
     deleteSurveyLocation(input: $input, condition: $condition) {
       id
       location
+      inchargeEmail
       createdAt
       updatedAt
     }
