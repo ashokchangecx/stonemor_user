@@ -245,7 +245,10 @@ function App() {
             path="/surveyResponses/:responseID"
             component={SurveyResponses}
           />
-          <Route path="/surveyComplete" component={SurveyComplete} />
+          <Route
+            path="/surveyComplete/:questionnaireID"
+            component={SurveyComplete}
+          />
         </BrowserRouter>
       </MuiThemeProvider>
     </div>

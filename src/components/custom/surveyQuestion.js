@@ -177,7 +177,8 @@ const SurveyQuestion = (props) => {
     );
     setIsPostingResponse(false);
     console.log("Survey completed successfully : ");
-    props.history.push("/surveyComplete");
+    props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
+    window.location.reload();
   };
 
   const handleNextClick = () => {
@@ -551,8 +552,7 @@ const SurveyQuestion = (props) => {
           <DialogContentText
           // id="alert-dialog-description"
           >
-            Welcome to {getQuestionnaire?.name}. Click continue to attend
-            survey.
+            {getQuestionnaire?.introMsg}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

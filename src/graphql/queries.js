@@ -185,52 +185,7 @@ export const getQuestionnaire = /* GraphQL */ `
       endMsg
       createdAt
       updatedAt
-      survey {
-        id
-        name
-        description
-        image
-        archived
-        groups
-        createdAt
-        updatedAt
-        preQuestionnaire {
-          id
-          name
-          description
-          image
-          type
-          introMsg
-          endMsg
-          createdAt
-          updatedAt
-        }
-        mainQuestionnaire {
-          id
-          name
-          description
-          image
-          type
-          introMsg
-          endMsg
-          createdAt
-          updatedAt
-        }
-        postQuestionnaire {
-          id
-          name
-          description
-          image
-          type
-          introMsg
-          endMsg
-          createdAt
-          updatedAt
-        }
-        questionnaire {
-          nextToken
-        }
-      }
+
       question(limit: 200) {
         items {
           id
