@@ -122,13 +122,11 @@ const SurveyQuestion = (props) => {
     setCurrentAnswer(newValue);
   };
   const value = currentQuestion?.order - 1;
-  // console.log("valuie", value);
+
   const normalise = () => ((value - MIN) * 100) / (MAX - MIN);
   const MIN = 0;
 
-  // console.log("MIN", MIN);
   const MAX = getQuestionnaire?.question?.items?.length;
-  // console.log("MAX", MAX);
 
   const handleClose = () => {
     setOpen(false);
@@ -231,7 +229,6 @@ const SurveyQuestion = (props) => {
     const lastAnswer = ANSLIST[ANSLIST.length - 1];
 
     const PreQue = lastAnswer?.questionId;
-    // console.log("currentAnswer", PreQue);
 
     if (PreQue) {
       setCurrentQuestion(questions.find((q) => q?.id === PreQue));
@@ -457,9 +454,6 @@ const SurveyQuestion = (props) => {
       }
     }
   }, [currentQuestion]);
-  // console.log("Demo", ANSLIST, currentAnswer, check);
-
-  // console.log("ANSLIST", params?.get("uid"));
 
   if (loading) {
     return (
@@ -501,7 +495,7 @@ const SurveyQuestion = (props) => {
       </div>
     );
   }
-  console.log("Check : ", check);
+
   return (
     <div className={classes.root} style={styles.paperContainer}>
       <AppBar position="stickey" style={{ backgroundColor: "#fff" }}>
