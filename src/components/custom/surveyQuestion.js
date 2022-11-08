@@ -100,7 +100,6 @@ const SurveyQuestion = (props) => {
   const {
     data: { loading, error, getQuestionnaire },
   } = props.getQuestionnaire;
-  console.log("getQuestionnaire", getQuestionnaire);
   const questions = getQuestionnaire?.question?.items;
   const firstQuestion =
     questions?.find((q) => q?.order === 1) ||
@@ -119,7 +118,6 @@ const SurveyQuestion = (props) => {
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
   const [open, setOpen] = React.useState(true);
 
-  console.log("startTime : ", startTime);
   const onValueChange = (event, newValue) => {
     setCurrentAnswer(newValue);
   };
@@ -136,8 +134,8 @@ const SurveyQuestion = (props) => {
     setOpen(false);
   };
   const handleChange = (e) => {
+    e.preventDefault();
     var temp = check;
-    console.log("CHANGE", e.target);
     if (e.target.checked === false) {
       temp = temp.filter((a) => {
         return a !== e.target.value;
@@ -176,48 +174,12 @@ const SurveyQuestion = (props) => {
       })
     );
     setIsPostingResponse(false);
-    console.log("Survey completed successfully : ");
     props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
     window.location.reload();
   };
 
-  const handleNextClick = () => {
-    setANSLIST([
-      ...ANSLIST,
-      {
-        questionId: currentQuestion?.id,
-        answer: currentAnswer,
-      },
-    ]);
-
-    if (currentQuestion?.listOptions?.length === 1) {
-      setCurrentQuestion(
-        questions.find(
-          (q) => q?.id === currentQuestion?.listOptions[0]?.nextQuestion
-        )
-      );
-    } else {
-      const nextQue = currentQuestion?.listOptions?.find(
-        (l) => l?.listValue === currentAnswer
-      );
-      if (nextQue) {
-        setCurrentQuestion(
-          questions.find((q) => q?.id === nextQue?.nextQuestion)
-        );
-      }
-      if (currentQuestion?.type === "CHECKBOX") {
-        setCurrentQuestion(
-          questions.find(
-            (q) => q?.id === currentQuestion?.listOptions[0]?.nextQuestion
-          )
-        );
-      }
-    }
-
-    setCurrentAnswer("");
-  };
-
   const handleNextClick2 = () => {
+    let tempCurrentQuestion = "";
     setANSLIST([
       ...ANSLIST,
       {
@@ -233,33 +195,36 @@ const SurveyQuestion = (props) => {
       const nextQuestion = currentQuestion?.dependent?.options?.find(
         (o) => o?.dependentValue === ansofDepQuestion?.answer
       );
-      setCurrentQuestion(
-        questions?.find((q) => q?.id === nextQuestion?.nextQuestion)
+
+      tempCurrentQuestion = questions?.find(
+        (q) => q?.id === nextQuestion?.nextQuestion
       );
     }
     if (currentQuestion?.isSelf) {
       if (currentQuestion?.type === "TEXT") {
         const nextQuestionId = currentQuestion?.listOptions[0].nextQuestion;
-        setCurrentQuestion(questions.find((q) => q?.id === nextQuestionId));
+        tempCurrentQuestion = questions.find((q) => q?.id === nextQuestionId);
       } else {
         const nextQue = currentQuestion?.listOptions?.find(
           (l) => l?.listValue === currentAnswer
         );
         if (nextQue) {
-          setCurrentQuestion(
-            questions.find((q) => q?.id === nextQue?.nextQuestion)
+          tempCurrentQuestion = questions.find(
+            (q) => q?.id === nextQue?.nextQuestion
           );
         }
       }
     }
     if (!currentQuestion?.isDependent && !currentQuestion?.isSelf) {
       const currentQuestionOrder = currentQuestion?.order;
-      setCurrentQuestion(
-        questions?.find((q) => q?.order === currentQuestionOrder + 1)
+
+      tempCurrentQuestion = questions?.find(
+        (q) => q?.order === currentQuestionOrder + 1
       );
     }
     setCurrentAnswer("");
     setCheck("");
+    setCurrentQuestion(tempCurrentQuestion);
   };
 
   const handlePreviousClick = () => {
@@ -271,6 +236,7 @@ const SurveyQuestion = (props) => {
     if (PreQue) {
       setCurrentQuestion(questions.find((q) => q?.id === PreQue));
       setCurrentAnswer(lastAnswer?.answer);
+      setCheck(lastAnswer?.answer);
     }
     setANSLIST(ANSLIST.slice(0, -1));
   };
@@ -398,8 +364,9 @@ const SurveyQuestion = (props) => {
                   control={
                     <Checkbox
                       key={o}
+                      checked={check?.includes(option?.listValue)}
                       value={option?.listValue}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e)}
                     />
                   }
                   label={option?.listValue}
@@ -534,7 +501,7 @@ const SurveyQuestion = (props) => {
       </div>
     );
   }
-
+  console.log("Check : ", check);
   return (
     <div className={classes.root} style={styles.paperContainer}>
       <AppBar position="stickey" style={{ backgroundColor: "#fff" }}>
