@@ -281,6 +281,7 @@ const SurveyQuestion = (props) => {
     setCurrentAnswer("");
     setCheck("");
     setCurrentQuestion(tempCurrentQuestion);
+    setHover("");
   };
 
   const handlePreviousClick = () => {
@@ -294,6 +295,7 @@ const SurveyQuestion = (props) => {
       setCheck(lastAnswer?.answer);
     }
     setANSLIST(ANSLIST.slice(0, -1));
+    setHover("");
   };
 
   const getQuestionView = (q) => {
@@ -600,7 +602,7 @@ const SurveyQuestion = (props) => {
 
   return (
     <div className={classes.root} style={styles.paperContainer}>
-      <AppBar position="stickey" style={{ backgroundColor: "#fff" }}>
+      <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
         <div style={{ justifyContent: "center", alignItems: "center" }}>
           <img src={logo1} alt="logo" className={classes.logo} />
         </div>
