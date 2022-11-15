@@ -129,7 +129,7 @@ const SurveyQuestion = (props) => {
   const [currentAnswer, setCurrentAnswer] = useState("");
 
   const [ANSLIST, setANSLIST] = useState([]);
-
+  const [hover, setHover] = React.useState(-1);
   const [check, setCheck] = React.useState([]);
   const [final, setFinal] = React.useState(false);
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
@@ -379,6 +379,9 @@ const SurveyQuestion = (props) => {
                   IconContainerComponent={IconContainer}
                   value={currentAnswer}
                   onChange={onValueChange}
+                  onChangeActive={(event, newHover) => {
+                    setHover(newHover);
+                  }}
                 />
                 {value !== null && (
                   <Box
@@ -389,7 +392,7 @@ const SurveyQuestion = (props) => {
                       fontWeight: 900,
                     }}
                   >
-                    {customIcons[currentAnswer]?.label}
+                    {customIcons[hover]?.label}
                   </Box>
                 )}
               </Box>
