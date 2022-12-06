@@ -7,7 +7,7 @@ import { getQuestionnaire } from "../../graphql/queries";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import logo1 from "../../assets/MemorialPlanning - Wide - Tag - 4C (2) (1).png";
+import logo1 from "../../assets/MP Logo no com.png";
 import { createResponses, createSurveyEntries } from "../../graphql/mutations";
 import { Rating } from "@material-ui/lab";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
@@ -74,8 +74,10 @@ const useStyles = makeStyles((theme) =>
       marginRight: theme.spacing(1),
     },
     logo: {
-      maxWidth: 300,
-      paddingTop: 2,
+      maxWidth: 150,
+      paddingTop: "10px",
+      paddingBottom: "10px",
+      paddingLeft: "20px",
     },
     loadCenter: {
       display: "flex",

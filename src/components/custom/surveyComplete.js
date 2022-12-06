@@ -1,6 +1,6 @@
 import React from "react";
 import { compose, graphql, withApollo } from "react-apollo";
-import logo from "../../assets/MemorialPlanning - Wide - Tag - 4C (2) (1).png";
+import logo from "../../assets/MP Logo no com.png";
 import {
   createStyles,
   makeStyles,
@@ -34,8 +34,10 @@ const useStyles = makeStyles((theme) =>
       margin: theme.spacing(2),
     },
     logo: {
-      maxWidth: 300,
-      paddingTop: 2,
+      maxWidth: 150,
+      paddingTop: "10px",
+      paddingBottom: "10px",
+      // paddingLeft: "10px",
     },
     text: {
       marginTop: 100,
