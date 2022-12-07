@@ -29,6 +29,7 @@ import Button from "@material-ui/core/Button";
 import Home from "../home";
 
 import SurveyQuestionarrireQuestion from "../custom/surveyQuestion";
+import SurveyQuestionarrireQuestionTest from "../custom/surveyQuestionTest";
 import SurveyComplete from "../custom/surveyComplete";
 import { createTheme } from "@material-ui/core/styles";
 import orange from "@material-ui/core/colors/orange";
@@ -240,6 +241,11 @@ function App() {
           <Route
             path="/surveyquestions/:questionnaireID"
             component={SurveyQuestionarrireQuestion}
+          />
+
+          <Route
+            path="/surveyquestionsTest/:questionnaireID"
+            component={SurveyQuestionarrireQuestionTest}
           />
           <Route
             path="/surveyResponses/:responseID"

@@ -214,6 +214,7 @@ const SurveyQuestion = (props) => {
       questionnaireId: getQuestionnaire?.id,
       surveyEntriesById: params?.get("uid"),
       surveyEntriesLocationId: params?.get("uid"),
+      testing: true,
     });
     await Promise.all(
       [
