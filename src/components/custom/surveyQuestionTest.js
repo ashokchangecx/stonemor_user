@@ -111,7 +111,7 @@ const styles = {
 };
 const startTime = new Date().toISOString();
 
-const SurveyQuestion = (props) => {
+const SurveyQuestionTest = (props) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const classes = useStyles();
@@ -789,6 +789,6 @@ const SurveyQuestionarrireQuestion = compose(
       },
     }),
   })
-)(SurveyQuestion);
+)(SurveyQuestionTest);
 
 export default withApollo(SurveyQuestionarrireQuestion);
