@@ -708,17 +708,19 @@ const SurveyQuestionTest = (props) => {
               </Button>
             )}
           </Box>
-          <div className={classes.fineshBution}>
-            <Button
-              variant="contained"
-              color="primary"
-              data-amplify-analytics-on="click"
-              onClick={handleFinish}
-            >
-              Finish
-              {/* <ArrowForwardIcon /> */}
-            </Button>
-          </div>
+          {final ? null : (
+            <div className={classes.fineshBution}>
+              <Button
+                variant="contained"
+                color="primary"
+                data-amplify-analytics-on="click"
+                onClick={handleFinish}
+              >
+                Finish
+                {/* <ArrowForwardIcon /> */}
+              </Button>
+            </div>
+          )}
         </div>
       </Container>
 
