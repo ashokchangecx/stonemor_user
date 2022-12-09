@@ -182,12 +182,12 @@ const SurveyQuestion = (props) => {
     setCurrentAnswer(newValue);
   };
   const value = currentQuestion?.order - 1;
-
+  const MAX = getQuestionnaire?.question?.items?.length;
   const normalise = () => ((value - MIN) * 100) / (MAX - MIN);
   const MIN = 0;
 
-  const MAX = getQuestionnaire?.question?.items?.length;
-
+  const surveyCompletedstatus =
+    ((currentQuestion?.order - MIN) * 100) / (MAX - MIN);
   const handleClose = () => {
     setOpen(false);
   };
@@ -214,6 +214,8 @@ const SurveyQuestion = (props) => {
       questionnaireId: getQuestionnaire?.id,
       surveyEntriesById: params?.get("uid"),
       surveyEntriesLocationId: params?.get("uid"),
+      testing: false,
+      complete: surveyCompletedstatus,
     });
     await Promise.all(
       [

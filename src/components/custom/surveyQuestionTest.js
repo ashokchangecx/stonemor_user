@@ -182,11 +182,14 @@ const SurveyQuestionTest = (props) => {
     setCurrentAnswer(newValue);
   };
   const value = currentQuestion?.order - 1;
-
-  const normalise = () => ((value - MIN) * 100) / (MAX - MIN);
-  const MIN = 0;
-
   const MAX = getQuestionnaire?.question?.items?.length;
+  const MIN = 0;
+  const normalise = () => ((value - MIN) * 100) / (MAX - MIN);
+
+  const surveyCompletedstatus = Math.round(
+    ((currentQuestion?.order - MIN) * 100) / (MAX - MIN)
+  );
+  console.log("surveyCompletedstatus", surveyCompletedstatus);
 
   const handleClose = () => {
     setOpen(false);
@@ -215,6 +218,7 @@ const SurveyQuestionTest = (props) => {
       surveyEntriesById: params?.get("uid"),
       surveyEntriesLocationId: params?.get("uid"),
       testing: true,
+      complete: surveyCompletedstatus,
     });
     await Promise.all(
       [
@@ -704,6 +708,17 @@ const SurveyQuestionTest = (props) => {
               </Button>
             )}
           </Box>
+          <div className={classes.fineshBution}>
+            <Button
+              variant="contained"
+              color="primary"
+              data-amplify-analytics-on="click"
+              onClick={handleFinish}
+            >
+              Finish
+              {/* <ArrowForwardIcon /> */}
+            </Button>
+          </div>
         </div>
       </Container>
 

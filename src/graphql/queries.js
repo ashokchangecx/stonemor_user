@@ -508,12 +508,18 @@ export const getSurveyEntries = /* GraphQL */ `
       startTime
       finishTime
       questionnaireId
+      deleted
+      archived
+      testing
+      complete
       createdAt
       updatedAt
       responses {
         items {
           id
           res
+          deleted
+          archived
           createdAt
           updatedAt
         }
@@ -523,6 +529,8 @@ export const getSurveyEntries = /* GraphQL */ `
         id
         name
         email
+        deleted
+        archived
         createdAt
         updatedAt
       }
@@ -530,6 +538,8 @@ export const getSurveyEntries = /* GraphQL */ `
         id
         location
         inchargeEmail
+        deleted
+        archived
         createdAt
         updatedAt
       }
@@ -548,9 +558,13 @@ export const listSurveyEntriess = /* GraphQL */ `
         startTime
         finishTime
         questionnaireId
+        deleted
+        archived
+        testing
+        complete
         createdAt
         updatedAt
-        responses {
+        responses(limit: 300000) {
           items {
             id
             res
@@ -573,6 +587,8 @@ export const listSurveyEntriess = /* GraphQL */ `
           id
           name
           email
+          deleted
+          archived
           createdAt
           updatedAt
         }
@@ -580,6 +596,8 @@ export const listSurveyEntriess = /* GraphQL */ `
           id
           location
           inchargeEmail
+          deleted
+          archived
           createdAt
           updatedAt
         }
