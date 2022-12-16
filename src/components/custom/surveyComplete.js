@@ -73,6 +73,16 @@ const SurveyComplete = (props) => {
   const {
     data: { loading, error, getQuestionnaire },
   } = props.getQuestionnaire;
+  const text = getQuestionnaire?.endMsg;
+  const linkify = (text) => {
+    const urlRegex =
+      /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    return text?.replace(urlRegex, function (url) {
+      return (
+        '<a href="' + url + '" target="_blank" rel="noreferrer">' + url + "</a>"
+      );
+    });
+  };
   return (
     <div style={styles.paperContainer}>
       <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
@@ -103,7 +113,7 @@ const SurveyComplete = (props) => {
             <Typography variant="h3" className={classes.textcolor}>
               {/* Thank you for completing our survey. If you have requested a
               follow up,someone will be in touch with you soon. */}
-              {getQuestionnaire?.endMsg}
+              <div dangerouslySetInnerHTML={{ __html: linkify(text) }} />
             </Typography>
           </ThemeProvider>
         </Box>

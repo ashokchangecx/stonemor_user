@@ -24,6 +24,7 @@ export const getSurvey = /* GraphQL */ `
       description
       image
       archived
+      deleted
       groups
       createdAt
       updatedAt
@@ -34,6 +35,8 @@ export const getSurvey = /* GraphQL */ `
         image
         type
         introMsg
+        deleted
+        archived
         endMsg
         createdAt
         updatedAt
@@ -43,6 +46,7 @@ export const getSurvey = /* GraphQL */ `
           description
           image
           archived
+          deleted
           groups
           createdAt
           updatedAt
@@ -58,6 +62,8 @@ export const getSurvey = /* GraphQL */ `
         image
         type
         introMsg
+        deleted
+        archived
         endMsg
         createdAt
         updatedAt
@@ -67,6 +73,7 @@ export const getSurvey = /* GraphQL */ `
           description
           image
           archived
+          deleted
           groups
           createdAt
           updatedAt
@@ -82,6 +89,8 @@ export const getSurvey = /* GraphQL */ `
         image
         type
         introMsg
+        deleted
+        archived
         endMsg
         createdAt
         updatedAt
@@ -91,6 +100,7 @@ export const getSurvey = /* GraphQL */ `
           description
           image
           archived
+          deleted
           groups
           createdAt
           updatedAt
@@ -107,6 +117,8 @@ export const getSurvey = /* GraphQL */ `
           image
           type
           introMsg
+          deleted
+          archived
           endMsg
           createdAt
           updatedAt
@@ -129,6 +141,7 @@ export const listSurveys = /* GraphQL */ `
         description
         image
         archived
+        deleted
         groups
         createdAt
         updatedAt
@@ -139,6 +152,8 @@ export const listSurveys = /* GraphQL */ `
           image
           type
           introMsg
+          deleted
+          archived
           endMsg
           createdAt
           updatedAt
@@ -150,6 +165,8 @@ export const listSurveys = /* GraphQL */ `
           image
           type
           introMsg
+          deleted
+          archived
           endMsg
           createdAt
           updatedAt
@@ -161,6 +178,8 @@ export const listSurveys = /* GraphQL */ `
           image
           type
           introMsg
+          deleted
+          archived
           endMsg
           createdAt
           updatedAt
@@ -323,6 +342,8 @@ export const getQuestion = /* GraphQL */ `
         isText
         isMultiple
       }
+      deleted
+      archived
       order
       dependent {
         id
@@ -340,6 +361,8 @@ export const getQuestion = /* GraphQL */ `
         image
         type
         introMsg
+        deleted
+        archived
         endMsg
         createdAt
         updatedAt
@@ -349,6 +372,7 @@ export const getQuestion = /* GraphQL */ `
           description
           image
           archived
+          deleted
           groups
           createdAt
           updatedAt
@@ -379,6 +403,8 @@ export const listQuestions = /* GraphQL */ `
           isText
           isMultiple
         }
+        deleted
+        archived
         order
         dependent {
           id
@@ -392,6 +418,8 @@ export const listQuestions = /* GraphQL */ `
           image
           type
           introMsg
+          deleted
+          archived
           endMsg
           createdAt
           updatedAt
@@ -406,6 +434,8 @@ export const getResponses = /* GraphQL */ `
     getResponses(id: $id) {
       id
       res
+      deleted
+      archived
       createdAt
       updatedAt
       qu {
@@ -420,6 +450,8 @@ export const getResponses = /* GraphQL */ `
           isText
           isMultiple
         }
+        deleted
+        archived
         order
         dependent {
           id
@@ -433,6 +465,8 @@ export const getResponses = /* GraphQL */ `
           image
           type
           introMsg
+          deleted
+          archived
           endMsg
           createdAt
           updatedAt
@@ -443,6 +477,10 @@ export const getResponses = /* GraphQL */ `
         startTime
         finishTime
         questionnaireId
+        deleted
+        archived
+        testing
+        complete
         createdAt
         updatedAt
         responses {
@@ -452,6 +490,8 @@ export const getResponses = /* GraphQL */ `
           id
           name
           email
+          deleted
+          archived
           createdAt
           updatedAt
         }
@@ -459,6 +499,8 @@ export const getResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
+          deleted
+          archived
           createdAt
           updatedAt
         }
@@ -476,6 +518,8 @@ export const listResponsess = /* GraphQL */ `
       items {
         id
         res
+        deleted
+        archived
         createdAt
         updatedAt
         qu {
@@ -484,6 +528,8 @@ export const listResponsess = /* GraphQL */ `
           type
           isSelf
           isDependent
+          deleted
+          archived
           order
           createdAt
           updatedAt
@@ -493,6 +539,10 @@ export const listResponsess = /* GraphQL */ `
           startTime
           finishTime
           questionnaireId
+          deleted
+          archived
+          testing
+          complete
           createdAt
           updatedAt
         }
@@ -612,6 +662,8 @@ export const getSurveyUser = /* GraphQL */ `
       id
       name
       email
+      deleted
+      archived
       createdAt
       updatedAt
     }
@@ -628,6 +680,8 @@ export const listSurveyUsers = /* GraphQL */ `
         id
         name
         email
+        deleted
+        archived
         createdAt
         updatedAt
       }
@@ -641,6 +695,8 @@ export const getSurveyLocation = /* GraphQL */ `
       id
       location
       inchargeEmail
+      deleted
+      archived
       createdAt
       updatedAt
     }
@@ -657,6 +713,8 @@ export const listSurveyLocations = /* GraphQL */ `
         id
         location
         inchargeEmail
+        deleted
+        archived
         createdAt
         updatedAt
       }

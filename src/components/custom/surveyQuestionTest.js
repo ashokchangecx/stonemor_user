@@ -3,12 +3,16 @@ import { graphql, compose, withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import { useLocation } from "react-router-dom";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { getQuestionnaire } from "../../graphql/queries";
+import { getQuestionnaire, listSurveyEntriess } from "../../graphql/queries";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import logo1 from "../../assets/MP Logo no com.png";
-import { createResponses, createSurveyEntries } from "../../graphql/mutations";
+import {
+  createResponses,
+  createSurveyEntries,
+  updateSurveyEntries,
+} from "../../graphql/mutations";
 import { Rating } from "@material-ui/lab";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
@@ -136,6 +140,8 @@ const SurveyQuestionTest = (props) => {
   const [final, setFinal] = React.useState(false);
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
   const [open, setOpen] = React.useState(true);
+  const [totalTime, setTotalTime] = useState("");
+
   //rating//
   const customIcons = {
     1: {
@@ -186,10 +192,29 @@ const SurveyQuestionTest = (props) => {
   const MIN = 0;
   const normalise = () => ((value - MIN) * 100) / (MAX - MIN);
 
-  const surveyCompletedstatus = Math.round(
-    ((currentQuestion?.order - MIN) * 100) / (MAX - MIN)
-  );
+  const surveyCompletedstatus =
+    ((currentQuestion?.order - MIN) * 100) / (MAX - MIN);
+  const completedStatus = Math.round(surveyCompletedstatus);
+
   console.log("surveyCompletedstatus", surveyCompletedstatus);
+  console.log("completedStatus", completedStatus);
+  //timer//
+
+  const handleTotelTime = () => {
+    setTotalTime(questions?.length * 20);
+  };
+
+  useEffect(() => {
+    handleTotelTime();
+  }, [getQuestionnaire]);
+
+  console.log("surveyTime", totalTime);
+
+  const time = totalTime / 60;
+
+  let sliceNumber = (num, len) => +String(num).slice(0, len);
+
+  const timeformat = sliceNumber(time, 2);
 
   const handleClose = () => {
     setOpen(false);
@@ -206,10 +231,7 @@ const SurveyQuestionTest = (props) => {
       ? setCheck([...check, e.target.value])
       : setCheck([...temp]);
   };
-
-  const handleFinish = async (event) => {
-    event.preventDefault();
-    setIsPostingResponse(true);
+  const handlECreateSurveyEntry = async () => {
     await props.onCreateSurveyEntries({
       id: group,
       startTime: startTime,
@@ -218,8 +240,30 @@ const SurveyQuestionTest = (props) => {
       surveyEntriesById: params?.get("uid"),
       surveyEntriesLocationId: params?.get("uid"),
       testing: true,
-      complete: surveyCompletedstatus,
+      complete: completedStatus,
     });
+  };
+
+  console.log("group", group);
+  const handleUpdateSurveyEntries = () => {
+    props.onUpdateSurveyEntries({
+      id: group,
+      complete: completedStatus,
+    });
+  };
+  const handleFinish = async (event) => {
+    event.preventDefault();
+    setIsPostingResponse(true);
+    // await props.onCreateSurveyEntries({
+    //   id: group,
+    //   startTime: startTime,
+    //   finishTime: new Date().toISOString(),
+    //   questionnaireId: getQuestionnaire?.id,
+    //   surveyEntriesById: params?.get("uid"),
+    //   surveyEntriesLocationId: params?.get("uid"),
+    //   testing: true,
+    //   complete: surveyCompletedstatus,
+    // });
     await Promise.all(
       [
         ...ANSLIST,
@@ -284,6 +328,12 @@ const SurveyQuestionTest = (props) => {
       tempCurrentQuestion = questions?.find(
         (q) => q?.order === currentQuestionOrder + 1
       );
+    }
+    if (currentQuestion?.order === 1) {
+      handlECreateSurveyEntry();
+    }
+    if (currentQuestion?.order > 1) {
+      handleUpdateSurveyEntries();
     }
     setCurrentAnswer("");
     setCheck("");
@@ -801,6 +851,37 @@ const SurveyQuestionarrireQuestion = compose(
         props.mutate({
           variables: {
             input: ip,
+          },
+        });
+      },
+    }),
+  }),
+  graphql(gql(updateSurveyEntries), {
+    props: (props) => ({
+      onUpdateSurveyEntries: (ip) => {
+        props.mutate({
+          variables: {
+            input: ip,
+          },
+          update: (store, { data: { updateSurveyEntries } }) => {
+            const query = gql(listSurveyEntriess);
+
+            const data = store.readQuery({
+              query,
+            });
+            if (data?.listSurveyEntriess?.items?.length > 0) {
+              data.listSurveyEntriess.items = [
+                ...data.listSurveyEntriess.items.filter(
+                  (item) => item?.id !== updateSurveyEntries?.id
+                ),
+                updateSurveyEntries,
+              ];
+            }
+            store.writeQuery({
+              query,
+              data,
+              variables: { filter: null, limit: null, nextToken: null },
+            });
           },
         });
       },
