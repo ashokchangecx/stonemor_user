@@ -674,11 +674,17 @@ const SurveyQuestionTest = (props) => {
           <DialogContentText
           // id="alert-dialog-description"
           >
-            {getQuestionnaire?.introMsg}
+            {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
+            this survey
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            color="primary"
+            autoFocus
+          >
             continue
           </Button>
         </DialogActions>

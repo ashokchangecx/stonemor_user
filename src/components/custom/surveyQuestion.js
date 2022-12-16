@@ -662,7 +662,8 @@ const SurveyQuestion = (props) => {
           <DialogContentText
           // id="alert-dialog-description"
           >
-            {getQuestionnaire?.introMsg}
+            {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
+            this survey
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -747,11 +748,6 @@ const SurveyQuestion = (props) => {
             )}
           </Box>
         </div>
-        {currentQuestion?.order === 1 && (
-          <Typography className={classes.time}>
-            {timeformat} minutes to complete this survey
-          </Typography>
-        )}
       </Container>
 
       {/* <div>
