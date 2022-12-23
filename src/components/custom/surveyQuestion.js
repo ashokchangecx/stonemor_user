@@ -196,6 +196,7 @@ const SurveyQuestion = (props) => {
   const completedStatus = Math.round(surveyCompletedstatus);
 
   //timer//
+  console.log("completedStatus", completedStatus);
 
   const handleTotelTime = () => {
     setTotalTime(questions?.length * 20);
@@ -265,6 +266,7 @@ const SurveyQuestion = (props) => {
           res: response?.answer,
           responsesGroupId: group,
         });
+        await handleUpdateSurveyEntries();
         return <CircularProgress />;
       })
     );
@@ -327,6 +329,7 @@ const SurveyQuestion = (props) => {
     if (currentQuestion?.order > 1) {
       handleUpdateSurveyEntries();
     }
+
     setCurrentAnswer("");
     setCheck("");
     setCurrentQuestion(tempCurrentQuestion);
