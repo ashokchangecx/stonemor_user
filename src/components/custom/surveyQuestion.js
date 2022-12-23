@@ -266,10 +266,11 @@ const SurveyQuestion = (props) => {
           res: response?.answer,
           responsesGroupId: group,
         });
-        await handleUpdateSurveyEntries();
+        handleUpdateSurveyEntries();
         return <CircularProgress />;
       })
     );
+
     setIsPostingResponse(false);
     props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
     window.location.reload();
