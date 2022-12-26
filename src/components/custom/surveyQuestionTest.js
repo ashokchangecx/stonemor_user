@@ -141,7 +141,6 @@ const SurveyQuestionTest = (props) => {
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
   const [open, setOpen] = React.useState(true);
   const [totalTime, setTotalTime] = useState("");
-
   //rating//
   const customIcons = {
     1: {
@@ -189,15 +188,13 @@ const SurveyQuestionTest = (props) => {
   };
   const value = currentQuestion?.order - 1;
   const MAX = getQuestionnaire?.question?.items?.length;
-  const MIN = 0;
   const normalise = () => ((value - MIN) * 100) / (MAX - MIN);
+  const MIN = 0;
 
   const surveyCompletedstatus =
     ((currentQuestion?.order - MIN) * 100) / (MAX - MIN);
   const completedStatus = Math.round(surveyCompletedstatus);
 
-  console.log("surveyCompletedstatus", surveyCompletedstatus);
-  console.log("completedStatus", completedStatus);
   //timer//
 
   const handleTotelTime = () => {
@@ -215,7 +212,6 @@ const SurveyQuestionTest = (props) => {
   let sliceNumber = (num, len) => +String(num).slice(0, len);
 
   const timeformat = sliceNumber(time, 2);
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -231,6 +227,7 @@ const SurveyQuestionTest = (props) => {
       ? setCheck([...check, e.target.value])
       : setCheck([...temp]);
   };
+
   const handlECreateSurveyEntry = async () => {
     await props.onCreateSurveyEntries({
       id: group,
@@ -244,26 +241,17 @@ const SurveyQuestionTest = (props) => {
     });
   };
 
-  console.log("group", group);
   const handleUpdateSurveyEntries = () => {
     props.onUpdateSurveyEntries({
       id: group,
       complete: completedStatus,
     });
   };
+
   const handleFinish = async (event) => {
     event.preventDefault();
     setIsPostingResponse(true);
-    // await props.onCreateSurveyEntries({
-    //   id: group,
-    //   startTime: startTime,
-    //   finishTime: new Date().toISOString(),
-    //   questionnaireId: getQuestionnaire?.id,
-    //   surveyEntriesById: params?.get("uid"),
-    //   surveyEntriesLocationId: params?.get("uid"),
-    //   testing: true,
-    //   complete: surveyCompletedstatus,
-    // });
+
     await Promise.all(
       [
         ...ANSLIST,
@@ -277,9 +265,11 @@ const SurveyQuestionTest = (props) => {
           res: response?.answer,
           responsesGroupId: group,
         });
+        handleUpdateSurveyEntries();
         return <CircularProgress />;
       })
     );
+
     setIsPostingResponse(false);
     props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
     window.location.reload();
@@ -329,12 +319,17 @@ const SurveyQuestionTest = (props) => {
         (q) => q?.order === currentQuestionOrder + 1
       );
     }
+    if (currentQuestion?.type === "CHECKBOX" && currentQuestion?.isSelf) {
+      const nextQuestionId = currentQuestion?.listOptions[0].nextQuestion;
+      tempCurrentQuestion = questions.find((q) => q?.id === nextQuestionId);
+    }
     if (currentQuestion?.order === 1) {
       handlECreateSurveyEntry();
     }
     if (currentQuestion?.order > 1) {
       handleUpdateSurveyEntries();
     }
+
     setCurrentAnswer("");
     setCheck("");
     setCurrentQuestion(tempCurrentQuestion);
@@ -679,12 +674,7 @@ const SurveyQuestionTest = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="primary"
-            autoFocus
-          >
+          <Button onClick={handleClose} color="primary" autoFocus>
             continue
           </Button>
         </DialogActions>
@@ -764,19 +754,6 @@ const SurveyQuestionTest = (props) => {
               </Button>
             )}
           </Box>
-          {final ? null : (
-            <div className={classes.fineshBution}>
-              <Button
-                variant="contained"
-                color="primary"
-                data-amplify-analytics-on="click"
-                onClick={handleFinish}
-              >
-                Finish
-                {/* <ArrowForwardIcon /> */}
-              </Button>
-            </div>
-          )}
         </div>
       </Container>
 

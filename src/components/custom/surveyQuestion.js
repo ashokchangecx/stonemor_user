@@ -196,7 +196,6 @@ const SurveyQuestion = (props) => {
   const completedStatus = Math.round(surveyCompletedstatus);
 
   //timer//
-  console.log("completedStatus", completedStatus);
 
   const handleTotelTime = () => {
     setTotalTime(questions?.length * 20);
