@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) =>
       maxWidth: 170,
       paddingTop: "15px",
       paddingBottom: "15px",
-      paddingLeft: "20px",
+      paddingLeft: "10px",
     },
     loadCenter: {
       display: "flex",
@@ -173,9 +173,6 @@ const SurveyQuestion = (props) => {
       user?.responses?.items?.length > 0
   );
 
-  console.log("SurveyEntryFilter", SurveyEntryFilter);
-  console.log("listSurveyEntriess", listSurveyEntriess);
-
   const [currentQuestion, setCurrentQuestion] = useState(firstQuestion);
   const [currentAnswer, setCurrentAnswer] = useState("");
 
@@ -249,8 +246,6 @@ const SurveyQuestion = (props) => {
   useEffect(() => {
     handleTotelTime();
   }, [getQuestionnaire]);
-
-  console.log("surveyTime", totalTime);
 
   const time = totalTime / 60;
 
