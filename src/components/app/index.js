@@ -39,7 +39,7 @@ import SurveyResponses from "../custom/surveyResponses";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#4776a9",
+      main: "#6aa342",
     },
     secondary: indigo,
   },
@@ -148,7 +148,7 @@ function App() {
   });
 
   return (
-    <div className={classes.root} style={{ backgroundColor: "#a5edfe36" }}>
+    <div className={classes.root} style={{ backgroundColor: "#fafbfb" }}>
       {/* <Dialog
         open={openDialog}
         onClose={handleCloseDialog}

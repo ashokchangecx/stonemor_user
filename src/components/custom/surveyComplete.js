@@ -34,10 +34,10 @@ const useStyles = makeStyles((theme) =>
       margin: theme.spacing(2),
     },
     logo: {
-      maxWidth: 150,
-      paddingTop: "10px",
-      paddingBottom: "10px",
-      // paddingLeft: "10px",
+      maxWidth: 170,
+      paddingTop: "15px",
+      paddingBottom: "15px",
+      paddingLeft: "10px",
     },
     text: {
       marginTop: 100,
