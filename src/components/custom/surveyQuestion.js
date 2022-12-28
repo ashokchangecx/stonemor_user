@@ -115,10 +115,10 @@ const useStyles = makeStyles((theme) =>
 );
 const StyledRating = withStyles({
   iconFilled: {
-    color: "red",
+    color: "#ff9529",
   },
   iconHover: {
-    color: "orange",
+    color: "#ffdf00",
   },
   iconEmpty: {
     color: "#484145",

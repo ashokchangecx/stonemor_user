@@ -23,9 +23,12 @@ import {
   AppBar,
   Box,
   Button,
+  Card,
+  CardContent,
   Checkbox,
   CircularProgress,
   Container,
+  createTheme,
   Dialog,
   DialogActions,
   DialogContent,
@@ -35,10 +38,12 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  Grid,
   Paper,
   Radio,
   RadioGroup,
   TextField,
+  ThemeProvider,
   Toolbar,
   Typography,
   withStyles,
@@ -78,10 +83,10 @@ const useStyles = makeStyles((theme) =>
       marginRight: theme.spacing(1),
     },
     logo: {
-      maxWidth: 150,
-      paddingTop: "10px",
-      paddingBottom: "10px",
-      paddingLeft: "20px",
+      maxWidth: 170,
+      paddingTop: "15px",
+      paddingBottom: "15px",
+      paddingLeft: "10px",
     },
     loadCenter: {
       display: "flex",
@@ -92,14 +97,28 @@ const useStyles = makeStyles((theme) =>
     progressBar: {
       with: "20%",
     },
+    text: {
+      marginTop: 100,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    img: {
+      width: 100,
+      height: 100,
+    },
+    textcolor: {
+      // color: "#fafafa",
+      // fontWeight: 800,
+    },
   })
 );
 const StyledRating = withStyles({
   iconFilled: {
-    color: "red",
+    color: "#ff9529",
   },
   iconHover: {
-    color: "orange",
+    color: "#ffdf00",
   },
   iconEmpty: {
     color: "#484145",
@@ -113,6 +132,17 @@ const styles = {
     minHeight: "100vh",
   },
 };
+const theme = createTheme();
+theme.typography.h3 = {
+  fontSize: "1.2rem",
+  "@media (min-width:600px)": {
+    fontSize: "1.5rem",
+    textAlign: "center",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2rem",
+  },
+};
 const startTime = new Date().toISOString();
 
 const SurveyQuestionTest = (props) => {
@@ -123,13 +153,25 @@ const SurveyQuestionTest = (props) => {
   const {
     data: { loading, error, getQuestionnaire },
   } = props.getQuestionnaire;
-  const questions = getQuestionnaire?.question?.items;
+  const {
+    data: { listSurveyEntriess },
+  } = props.listSurveyEntriess;
+  const questions = getQuestionnaire?.question?.items?.filter(
+    (user) => user?.deleted !== true && user?.archived !== true
+  );
   const firstQuestion =
     questions?.find((q) => q?.order === 1) ||
     questions?.sort((a, b) => b?.order - a?.order)[questions?.length - 1];
   const lastQuestion = questions?.sort((a, b) => a?.order - b?.order)[
     questions?.length - 1
   ];
+
+  const SurveyEntryFilter = listSurveyEntriess?.items?.find(
+    (user) =>
+      user?.questionnaireId === getQuestionnaire?.id &&
+      user?.by?.id === params?.get("uid") &&
+      user?.responses?.items?.length > 0
+  );
 
   const [currentQuestion, setCurrentQuestion] = useState(firstQuestion);
   const [currentAnswer, setCurrentAnswer] = useState("");
@@ -204,8 +246,6 @@ const SurveyQuestionTest = (props) => {
   useEffect(() => {
     handleTotelTime();
   }, [getQuestionnaire]);
-
-  console.log("surveyTime", totalTime);
 
   const time = totalTime / 60;
 
@@ -651,68 +691,121 @@ const SurveyQuestionTest = (props) => {
       </div>
     );
   }
-
-  return (
-    <div className={classes.root} style={styles.paperContainer}>
-      <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
-        <div style={{ justifyContent: "center", alignItems: "center" }}>
-          <img src={logo1} alt="logo" className={classes.logo} />
-        </div>
-      </AppBar>
-      <Dialog
-        open={open}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Stonemor"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText
-          // id="alert-dialog-description"
+  if (SurveyEntryFilter?.id) {
+    return (
+      <div style={styles.paperContainer}>
+        <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
+          <Toolbar>
+            <img src={logo1} alt="logo" className={classes.logo} />
+          </Toolbar>
+        </AppBar>
+        <div className={classes.text}>
+          <Box
+            sx={{
+              width: "300",
+              height: "300",
+              padding: "10px 80px",
+            }}
+            alignItems="center"
+            justifyContent="center"
           >
-            {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
-            this survey
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            continue
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <div
-        style={{
-          // do your styles depending on your needs.
-          display: "flex",
-          justifyContent: "end",
-          alignItems: "center",
-          marginRight: "3rem",
-          marginTop: "10px",
-        }}
-      >
-        <Box display="flex" alignItems="center" justifyContent="end">
-          <Box width="0%" mr={2.5}>
-            <CircularProgress
-              variant="determinate"
-              value={normalise(props.value)}
-              size="4.75rem"
-              thickness={5}
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/7611/7611575.png"
+                className={classes.img}
+                alt="success"
+              />
+            </div>
+            <Box sx={{ marginTop: "10px ", alignItems: "center" }}>
+              <ThemeProvider theme={theme}>
+                <Typography variant="h3" className={classes.textcolor}>
+                  {/* Thank you for completing our survey. If you have requested a
+              follow up,someone will be in touch with you soon. */}
+                  {/* <div dangerouslySetInnerHTML={{ __html: linkify(text) }} /> */}
+                  You are already submitted responses to{" "}
+                  {getQuestionnaire?.name}. Thank you
+                </Typography>
+              </ThemeProvider>
+            </Box>
           </Box>
-          <Box minWidth={40}>
-            <Typography variant="h6" color="textSecondary">{`${Math.round(
-              normalise(props.value)
-            )}%`}</Typography>
-          </Box>
-        </Box>
+        </div>
       </div>
-      <Container maxWidth="md">
-        <Typography className={classes.custom} variant="h5">
-          {getQuestionnaire?.name}
-        </Typography>
-        <div className={classes.cont}>
-          <div>{getQuestionView(currentQuestion)}</div>
-          <Box>
-            {/* <Button
+    );
+  }
+  if (!SurveyEntryFilter?.id) {
+    return (
+      <div className={classes.root} style={styles.paperContainer}>
+        <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
+          <div style={{ justifyContent: "center", alignItems: "center" }}>
+            <img src={logo1} alt="logo" className={classes.logo} />
+          </div>
+        </AppBar>
+
+        <Dialog
+          open={open}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Stonemor"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText
+            // id="alert-dialog-description"
+            >
+              {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
+              this survey
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleClose}
+              color="primary"
+              autoFocus
+              variant="contained"
+            >
+              continue
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <div
+          style={{
+            // do your styles depending on your needs.
+            display: "flex",
+            justifyContent: "end",
+            alignItems: "center",
+            marginRight: "3rem",
+            marginTop: "10px",
+          }}
+        >
+          <Box display="flex" alignItems="center" justifyContent="end">
+            <Box width="0%" mr={2.5}>
+              <CircularProgress
+                variant="determinate"
+                value={normalise(props.value)}
+                size="4.75rem"
+                thickness={5}
+              />
+            </Box>
+            <Box minWidth={40}>
+              <Typography variant="h6" color="textSecondary">{`${Math.round(
+                normalise(props.value)
+              )}%`}</Typography>
+            </Box>
+          </Box>
+        </div>
+        <Container maxWidth="md">
+          <Typography className={classes.custom} variant="h5">
+            {getQuestionnaire?.name}
+          </Typography>
+          <div className={classes.cont}>
+            <div>{getQuestionView(currentQuestion)}</div>
+            <Box>
+              {/* <Button
               variant="contained"
               color="primary"
               className={classes.button}
@@ -730,34 +823,34 @@ const SurveyQuestionTest = (props) => {
               <ArrowBackIcon />
               Prev
             </Button> */}
-            {final ? (
-              <Button
-                variant="contained"
-                color="primary"
-                data-amplify-analytics-on="click"
-                onClick={handleFinish}
-              >
-                Finish
-                {/* <ArrowForwardIcon /> */}
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                disabled={!currentAnswer}
-                data-amplify-analytics-on="click"
-                onClick={handleNextClick2}
-              >
-                Next
-                <ArrowForwardIcon />
-              </Button>
-            )}
-          </Box>
-        </div>
-      </Container>
+              {final ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  data-amplify-analytics-on="click"
+                  onClick={handleFinish}
+                >
+                  Finish
+                  {/* <ArrowForwardIcon /> */}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  disabled={!currentAnswer}
+                  data-amplify-analytics-on="click"
+                  onClick={handleNextClick2}
+                >
+                  Next
+                  <ArrowForwardIcon />
+                </Button>
+              )}
+            </Box>
+          </div>
+        </Container>
 
-      {/* <div>
+        {/* <div>
       <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
         <Box width="20%" mr={1}>
           <LinearProgress
@@ -772,7 +865,7 @@ const SurveyQuestionTest = (props) => {
         </Box>
       </Box>
     </div> */}
-      {/* <div
+        {/* <div
         style={{
           // do your styles depending on your needs.
           display: "flex",
@@ -797,8 +890,9 @@ const SurveyQuestionTest = (props) => {
           </Box>
         </Box>
       </div> */}
-    </div>
-  );
+      </div>
+    );
+  }
 };
 
 const SurveyQuestionarrireQuestion = compose(
@@ -869,6 +963,18 @@ const SurveyQuestionarrireQuestion = compose(
         });
       },
     }),
+  }),
+  graphql(gql(listSurveyEntriess), {
+    options: (props) => ({
+      errorPolicy: "all",
+      fetchPolicy: "cache-and-network",
+      variables: { limit: 300000 },
+    }),
+    props: (props) => {
+      return {
+        listSurveyEntriess: props ? props : [],
+      };
+    },
   })
 )(SurveyQuestionTest);
 
