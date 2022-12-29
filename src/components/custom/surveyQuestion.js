@@ -292,7 +292,7 @@ const SurveyQuestion = (props) => {
   const handleFinish = async (event) => {
     event.preventDefault();
     setIsPostingResponse(true);
-
+    handleUpdateSurveyEntries();
     await Promise.all(
       [
         ...ANSLIST,
@@ -306,7 +306,7 @@ const SurveyQuestion = (props) => {
           res: response?.answer,
           responsesGroupId: group,
         });
-        handleUpdateSurveyEntries();
+
         return <CircularProgress />;
       })
     );
