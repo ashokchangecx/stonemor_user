@@ -170,7 +170,8 @@ const SurveyQuestionTest = (props) => {
     (user) =>
       user?.questionnaireId === getQuestionnaire?.id &&
       user?.by?.id === params?.get("uid") &&
-      user?.responses?.items?.length > 0
+      user?.responses?.items?.length > 0 &&
+      user?.testing === true
   );
 
   const [currentQuestion, setCurrentQuestion] = useState(firstQuestion);
