@@ -3,7 +3,11 @@ import { graphql, compose, withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import { useLocation } from "react-router-dom";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { getQuestionnaire, listSurveyEntriess } from "../../graphql/queries";
+import {
+  getQuestionnaire,
+  listResponsess,
+  listSurveyEntriess,
+} from "../../graphql/queries";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
@@ -11,6 +15,8 @@ import logo1 from "../../assets/MP Logo no com.png";
 import {
   createResponses,
   createSurveyEntries,
+  deleteSurveyEntries,
+  updateResponses,
   updateSurveyEntries,
 } from "../../graphql/mutations";
 import { Rating } from "@material-ui/lab";
@@ -166,7 +172,7 @@ const SurveyQuestion = (props) => {
     questions?.length - 1
   ];
 
-  const SurveyEntryFilter = listSurveyEntriess?.items?.find(
+  const SurveyEntryFilter = listSurveyEntriess?.items?.filter(
     (user) =>
       user?.questionnaireId === getQuestionnaire?.id &&
       user?.by?.id === params?.get("uid") &&
@@ -270,16 +276,52 @@ const SurveyQuestion = (props) => {
   };
 
   const handlECreateSurveyEntry = async () => {
-    await props.onCreateSurveyEntries({
-      id: group,
-      startTime: startTime,
-      finishTime: new Date().toISOString(),
-      questionnaireId: getQuestionnaire?.id,
-      surveyEntriesById: params?.get("uid"),
-      surveyEntriesLocationId: params?.get("uid"),
-      testing: false,
-      complete: completedStatus,
-    });
+    if (!SurveyEntryFilter[0]?.id) {
+      await props.onCreateSurveyEntries({
+        id: group,
+        startTime: startTime,
+        finishTime: new Date().toISOString(),
+        questionnaireId: getQuestionnaire?.id,
+        surveyEntriesById: params?.get("uid"),
+        surveyEntriesLocationId: params?.get("uid"),
+        testing: false,
+        complete: completedStatus,
+      });
+    }
+
+    if (SurveyEntryFilter[0]?.id) {
+      await Promise.all(
+        [
+          ...SurveyEntryFilter,
+          {
+            id: SurveyEntryFilter?.id,
+          },
+        ].map(async (response) => {
+          const archiveData = {
+            id: response?.id,
+          };
+          if (archiveData?.id) {
+            await props.onDeleteSurveyEntries({
+              id: response?.id,
+            });
+          }
+          return null;
+        })
+      );
+      // await props.onDeleteSurveyEntries({
+      //   id: SurveyEntryFilter?.id,
+      // });
+      await props.onCreateSurveyEntries({
+        id: group,
+        startTime: startTime,
+        finishTime: new Date().toISOString(),
+        questionnaireId: getQuestionnaire?.id,
+        surveyEntriesById: params?.get("uid"),
+        surveyEntriesLocationId: params?.get("uid"),
+        testing: false,
+        complete: completedStatus,
+      });
+    }
   };
 
   const handleUpdateSurveyEntries = () => {
@@ -293,6 +335,7 @@ const SurveyQuestion = (props) => {
     event.preventDefault();
     setIsPostingResponse(true);
     handleUpdateSurveyEntries();
+
     await Promise.all(
       [
         ...ANSLIST,
@@ -312,7 +355,7 @@ const SurveyQuestion = (props) => {
     );
 
     setIsPostingResponse(false);
-    props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
+    await props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
     window.location.reload();
   };
 
@@ -692,121 +735,121 @@ const SurveyQuestion = (props) => {
       </div>
     );
   }
-  if (SurveyEntryFilter?.id) {
-    return (
-      <div style={styles.paperContainer}>
-        <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
-          <Toolbar>
-            <img src={logo1} alt="logo" className={classes.logo} />
-          </Toolbar>
-        </AppBar>
-        <div className={classes.text}>
-          <Box
-            sx={{
-              width: "300",
-              height: "300",
-              padding: "10px 80px",
-            }}
-            alignItems="center"
-            justifyContent="center"
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/7611/7611575.png"
-                className={classes.img}
-                alt="success"
-              />
-            </div>
-            <Box sx={{ marginTop: "10px ", alignItems: "center" }}>
-              <ThemeProvider theme={theme}>
-                <Typography variant="h3" className={classes.textcolor}>
-                  {/* Thank you for completing our survey. If you have requested a
-              follow up,someone will be in touch with you soon. */}
-                  {/* <div dangerouslySetInnerHTML={{ __html: linkify(text) }} /> */}
-                  You are already submitted responses to{" "}
-                  {getQuestionnaire?.name}. Thank you
-                </Typography>
-              </ThemeProvider>
-            </Box>
-          </Box>
+  // if (SurveyEntryFilter?.id) {
+  //   return (
+  //     <div style={styles.paperContainer}>
+  //       <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
+  //         <Toolbar>
+  //           <img src={logo1} alt="logo" className={classes.logo} />
+  //         </Toolbar>
+  //       </AppBar>
+  //       <div className={classes.text}>
+  //         <Box
+  //           sx={{
+  //             width: "300",
+  //             height: "300",
+  //             padding: "10px 80px",
+  //           }}
+  //           alignItems="center"
+  //           justifyContent="center"
+  //         >
+  //           <div
+  //             style={{
+  //               display: "flex",
+  //               justifyContent: "center",
+  //               alignItems: "center",
+  //             }}
+  //           >
+  //             <img
+  //               src="https://cdn-icons-png.flaticon.com/512/7611/7611575.png"
+  //               className={classes.img}
+  //               alt="success"
+  //             />
+  //           </div>
+  //           <Box sx={{ marginTop: "10px ", alignItems: "center" }}>
+  //             <ThemeProvider theme={theme}>
+  //               <Typography variant="h3" className={classes.textcolor}>
+  //                 {/* Thank you for completing our survey. If you have requested a
+  //             follow up,someone will be in touch with you soon. */}
+  //                 {/* <div dangerouslySetInnerHTML={{ __html: linkify(text) }} /> */}
+  //                 You are already submitted responses to{" "}
+  //                 {getQuestionnaire?.name}. Thank you
+  //               </Typography>
+  //             </ThemeProvider>
+  //           </Box>
+  //         </Box>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  // if (!SurveyEntryFilter?.id) {
+  return (
+    <div className={classes.root} style={styles.paperContainer}>
+      <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
+        <div style={{ justifyContent: "center", alignItems: "center" }}>
+          <img src={logo1} alt="logo" className={classes.logo} />
         </div>
-      </div>
-    );
-  }
-  if (!SurveyEntryFilter?.id) {
-    return (
-      <div className={classes.root} style={styles.paperContainer}>
-        <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
-          <div style={{ justifyContent: "center", alignItems: "center" }}>
-            <img src={logo1} alt="logo" className={classes.logo} />
-          </div>
-        </AppBar>
+      </AppBar>
 
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Stonemor"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText
-            // id="alert-dialog-description"
-            >
-              {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
-              this survey
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleClose}
-              color="primary"
-              autoFocus
-              variant="contained"
-            >
-              continue
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <div
-          style={{
-            // do your styles depending on your needs.
-            display: "flex",
-            justifyContent: "end",
-            alignItems: "center",
-            marginRight: "3rem",
-            marginTop: "10px",
-          }}
-        >
-          <Box display="flex" alignItems="center" justifyContent="end">
-            <Box width="0%" mr={2.5}>
-              <CircularProgress
-                variant="determinate"
-                value={normalise(props.value)}
-                size="4.75rem"
-                thickness={5}
-              />
-            </Box>
-            <Box minWidth={40}>
-              <Typography variant="h6" color="textSecondary">{`${Math.round(
-                normalise(props.value)
-              )}%`}</Typography>
-            </Box>
+      <Dialog
+        open={open}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Stonemor"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText
+          // id="alert-dialog-description"
+          >
+            {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
+            this survey
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleClose}
+            color="primary"
+            autoFocus
+            variant="contained"
+          >
+            continue
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <div
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "center",
+          marginRight: "3rem",
+          marginTop: "10px",
+        }}
+      >
+        <Box display="flex" alignItems="center" justifyContent="end">
+          <Box width="0%" mr={2.5}>
+            <CircularProgress
+              variant="determinate"
+              value={normalise(props.value)}
+              size="4.75rem"
+              thickness={5}
+            />
           </Box>
-        </div>
-        <Container maxWidth="md">
-          <Typography className={classes.custom} variant="h5">
-            {getQuestionnaire?.name}
-          </Typography>
-          <div className={classes.cont}>
-            <div>{getQuestionView(currentQuestion)}</div>
-            <Box>
-              {/* <Button
+          <Box minWidth={40}>
+            <Typography variant="h6" color="textSecondary">{`${Math.round(
+              normalise(props.value)
+            )}%`}</Typography>
+          </Box>
+        </Box>
+      </div>
+      <Container maxWidth="md">
+        <Typography className={classes.custom} variant="h5">
+          {getQuestionnaire?.name}
+        </Typography>
+        <div className={classes.cont}>
+          <div>{getQuestionView(currentQuestion)}</div>
+          <Box>
+            {/* <Button
               variant="contained"
               color="primary"
               className={classes.button}
@@ -824,34 +867,34 @@ const SurveyQuestion = (props) => {
               <ArrowBackIcon />
               Prev
             </Button> */}
-              {final ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  data-amplify-analytics-on="click"
-                  onClick={handleFinish}
-                >
-                  Finish
-                  {/* <ArrowForwardIcon /> */}
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  disabled={!currentAnswer}
-                  data-amplify-analytics-on="click"
-                  onClick={handleNextClick2}
-                >
-                  Next
-                  <ArrowForwardIcon />
-                </Button>
-              )}
-            </Box>
-          </div>
-        </Container>
+            {final ? (
+              <Button
+                variant="contained"
+                color="primary"
+                data-amplify-analytics-on="click"
+                onClick={handleFinish}
+              >
+                Finish
+                {/* <ArrowForwardIcon /> */}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                disabled={!currentAnswer}
+                data-amplify-analytics-on="click"
+                onClick={handleNextClick2}
+              >
+                Next
+                <ArrowForwardIcon />
+              </Button>
+            )}
+          </Box>
+        </div>
+      </Container>
 
-        {/* <div>
+      {/* <div>
       <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
         <Box width="20%" mr={1}>
           <LinearProgress
@@ -866,7 +909,7 @@ const SurveyQuestion = (props) => {
         </Box>
       </Box>
     </div> */}
-        {/* <div
+      {/* <div
         style={{
           // do your styles depending on your needs.
           display: "flex",
@@ -891,9 +934,9 @@ const SurveyQuestion = (props) => {
           </Box>
         </Box>
       </div> */}
-      </div>
-    );
-  }
+    </div>
+  );
+  // }
 };
 
 const SurveyQuestionarrireQuestion = compose(
@@ -960,6 +1003,52 @@ const SurveyQuestionarrireQuestion = compose(
               data,
               variables: { filter: null, limit: null, nextToken: null },
             });
+          },
+        });
+      },
+    }),
+  }),
+
+  graphql(gql(updateResponses), {
+    props: (props) => ({
+      onUpdateResponses: (ip) => {
+        props.mutate({
+          variables: {
+            input: ip,
+          },
+          update: (store, { data: { updateResponses } }) => {
+            const query = gql(listResponsess);
+
+            const data = store.readQuery({
+              query,
+            });
+            if (data?.listResponsess?.items?.length > 0) {
+              data.listResponsess.items = [
+                ...data.listResponsess.items.filter(
+                  (item) => item?.id !== updateResponses?.id
+                ),
+                updateResponses,
+              ];
+            }
+            store.writeQuery({
+              query,
+              data,
+              variables: { filter: null, limit: null, nextToken: null },
+            });
+          },
+        });
+      },
+    }),
+  }),
+  graphql(gql(deleteSurveyEntries), {
+    options: (props) => ({
+      errorPolicy: "all",
+    }),
+    props: (props) => ({
+      onDeleteSurveyEntries: (surveyEntries) => {
+        props.mutate({
+          variables: {
+            input: surveyEntries,
           },
         });
       },
