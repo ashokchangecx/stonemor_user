@@ -8,15 +8,8 @@ import {
   createTheme,
 } from "@material-ui/core/styles";
 import { getQuestionnaire } from "../../graphql/queries";
-import {
-  IconButton,
-  Paper,
-  Typography,
-  Box,
-  AppBar,
-  Toolbar,
-} from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { Typography, Box, AppBar, Toolbar } from "@material-ui/core";
+
 import gql from "graphql-tag";
 
 const styles = {
@@ -113,7 +106,7 @@ const SurveyComplete = (props) => {
             <Typography variant="h3" className={classes.textcolor}>
               {/* Thank you for completing our survey. If you have requested a
               follow up,someone will be in touch with you soon. */}
-              <div dangerouslySetInnerHTML={{ __html: linkify(text) }} />
+              <a dangerouslySetInnerHTML={{ __html: linkify(text) }} />
             </Typography>
           </ThemeProvider>
         </Box>

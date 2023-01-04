@@ -1,5 +1,4 @@
 import {
-  Button,
   makeStyles,
   Paper,
   Table,
@@ -7,14 +6,12 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from "@material-ui/core";
 import React from "react";
 import AdminMenu from "../admin/index";
-import { graphql, compose, withApollo } from "react-apollo";
+import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import { getResponses, listResponsess } from "../../graphql/queries";
-import { v4 as uuid } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {

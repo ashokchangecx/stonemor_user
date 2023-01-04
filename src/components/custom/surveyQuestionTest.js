@@ -8,7 +8,7 @@ import {
   listResponsess,
   listSurveyEntriess,
 } from "../../graphql/queries";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import logo1 from "../../assets/MP Logo no com.png";
@@ -29,8 +29,6 @@ import {
   AppBar,
   Box,
   Button,
-  Card,
-  CardContent,
   Checkbox,
   CircularProgress,
   Container,
@@ -44,12 +42,10 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
-  Grid,
   Paper,
   Radio,
   RadioGroup,
   TextField,
-  ThemeProvider,
   Toolbar,
   Typography,
   withStyles,
@@ -253,12 +249,28 @@ const SurveyQuestionTest = (props) => {
   useEffect(() => {
     handleTotelTime();
   }, [getQuestionnaire]);
-
-  const time = totalTime / 60;
+  const timer = totalTime - value * 20;
+  const time = timer / 60;
 
   let sliceNumber = (num, len) => +String(num).slice(0, len);
 
   const timeformat = sliceNumber(time, 2);
+
+  function secondsToTime(e) {
+    const h = Math.floor(e / 3600)
+        .toString()
+        .padStart(2, "0"),
+      m = Math.floor((e % 3600) / 60)
+        .toString()
+        .padStart(2, "0"),
+      s = Math.floor(e % 60)
+        .toString()
+        .padStart(2, "0");
+
+    return m + ":" + s;
+    //return `${h}:${m}:${s}`;
+  }
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -433,6 +445,7 @@ const SurveyQuestionTest = (props) => {
     setANSLIST(ANSLIST.slice(0, -1));
     setHover("");
   };
+  const RatingAns = Number(currentAnswer);
 
   const getQuestionView = (q) => {
     switch (q?.type) {
@@ -515,7 +528,7 @@ const SurveyQuestionTest = (props) => {
                   defaultValue={2}
                   getLabelText={(value) => customIcons[value]?.label}
                   IconContainerComponent={IconContainer}
-                  value={currentAnswer}
+                  value={RatingAns}
                   onChange={onValueChange}
                   onChangeActive={(event, newHover) => {
                     setHover(newHover);
@@ -873,6 +886,7 @@ const SurveyQuestionTest = (props) => {
                 color="primary"
                 data-amplify-analytics-on="click"
                 onClick={handleFinish}
+                disabled={!currentAnswer}
               >
                 Finish
                 {/* <ArrowForwardIcon /> */}
@@ -893,6 +907,10 @@ const SurveyQuestionTest = (props) => {
           </Box>
         </div>
       </Container>
+
+      <Box display="flex" alignItems="end" justifyContent="center" mt={5}>
+        <Typography>{secondsToTime(timer)}</Typography>
+      </Box>
 
       {/* <div>
       <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
