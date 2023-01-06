@@ -599,7 +599,7 @@ export const getSurveyEntries = /* GraphQL */ `
 export const listSurveyEntriess = /* GraphQL */ `
   query ListSurveyEntriess(
     $filter: ModelSurveyEntriesFilterInput
-    $limit: Int
+    $limit: Int = 3000000
     $nextToken: String
   ) {
     listSurveyEntriess(filter: $filter, limit: $limit, nextToken: $nextToken) {

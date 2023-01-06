@@ -172,8 +172,7 @@ const SurveyQuestion = (props) => {
     (user) =>
       user?.questionnaireId === getQuestionnaire?.id &&
       user?.by?.id === params?.get("uid") &&
-      user?.responses?.items?.length > 0 &&
-      user?.testing === false
+      user?.testing !== true
   );
 
   const [currentQuestion, setCurrentQuestion] = useState(firstQuestion);
@@ -856,6 +855,18 @@ const SurveyQuestion = (props) => {
           </Box>
         </Box>
       </div>
+      <div
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "center",
+          marginRight: "3rem",
+          marginTop: "10px",
+        }}
+      >
+        <Typography>{secondsToTime(timer)}</Typography>
+      </div>
       <Container maxWidth="md">
         <Typography className={classes.custom} variant="h5">
           {getQuestionnaire?.name}
@@ -908,10 +919,6 @@ const SurveyQuestion = (props) => {
           </Box>
         </div>
       </Container>
-
-      <Box display="flex" alignItems="end" justifyContent="center" mt={5}>
-        <Typography>{secondsToTime(timer)}</Typography>
-      </Box>
 
       {/* <div>
       <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
@@ -999,31 +1006,15 @@ const SurveyQuestionarrireQuestion = compose(
   graphql(gql(updateSurveyEntries), {
     props: (props) => ({
       onUpdateSurveyEntries: (ip) => {
-        props.mutate({
-          variables: {
-            input: ip,
-          },
-          update: (store, { data: { updateSurveyEntries } }) => {
-            const query = gql(listSurveyEntriess);
-
-            const data = store.readQuery({
-              query,
-            });
-            if (data?.listSurveyEntriess?.items?.length > 0) {
-              data.listSurveyEntriess.items = [
-                ...data.listSurveyEntriess.items.filter(
-                  (item) => item?.id !== updateSurveyEntries?.id
-                ),
-                updateSurveyEntries,
-              ];
-            }
-            store.writeQuery({
-              query,
-              data,
-              variables: { filter: null, limit: null, nextToken: null },
-            });
-          },
-        });
+        props
+          .mutate({
+            variables: {
+              input: ip,
+            },
+          })
+          .then((data) => {
+            //console.log(data)
+          });
       },
     }),
   }),
@@ -1077,7 +1068,6 @@ const SurveyQuestionarrireQuestion = compose(
     options: (props) => ({
       errorPolicy: "all",
       fetchPolicy: "cache-and-network",
-      variables: { limit: 300000 },
     }),
     props: (props) => {
       return {

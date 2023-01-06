@@ -172,7 +172,6 @@ const SurveyQuestionTest = (props) => {
     (user) =>
       user?.questionnaireId === getQuestionnaire?.id &&
       user?.by?.id === params?.get("uid") &&
-      user?.responses?.items?.length > 0 &&
       user?.testing === true
   );
 
@@ -855,6 +854,18 @@ const SurveyQuestionTest = (props) => {
           </Box>
         </Box>
       </div>
+      <div
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "center",
+          marginRight: "3rem",
+          marginTop: "10px",
+        }}
+      >
+        <Typography>{secondsToTime(timer)}</Typography>
+      </div>
       <Container maxWidth="md">
         <Typography className={classes.custom} variant="h5">
           {getQuestionnaire?.name}
@@ -908,9 +919,9 @@ const SurveyQuestionTest = (props) => {
         </div>
       </Container>
 
-      <Box display="flex" alignItems="end" justifyContent="center" mt={5}>
+      {/* <Box display="flex" alignItems="end" justifyContent="center" mt={5}>
         <Typography>{secondsToTime(timer)}</Typography>
-      </Box>
+      </Box> */}
 
       {/* <div>
       <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
@@ -1026,35 +1037,18 @@ const SurveyQuestionarrireQuestion = compose(
       },
     }),
   }),
-
-  graphql(gql(updateResponses), {
+  graphql(gql(updateSurveyEntries), {
     props: (props) => ({
-      onUpdateResponses: (ip) => {
-        props.mutate({
-          variables: {
-            input: ip,
-          },
-          update: (store, { data: { updateResponses } }) => {
-            const query = gql(listResponsess);
-
-            const data = store.readQuery({
-              query,
-            });
-            if (data?.listResponsess?.items?.length > 0) {
-              data.listResponsess.items = [
-                ...data.listResponsess.items.filter(
-                  (item) => item?.id !== updateResponses?.id
-                ),
-                updateResponses,
-              ];
-            }
-            store.writeQuery({
-              query,
-              data,
-              variables: { filter: null, limit: null, nextToken: null },
-            });
-          },
-        });
+      onUpdateSurveyEntries: (ip) => {
+        props
+          .mutate({
+            variables: {
+              input: ip,
+            },
+          })
+          .then((data) => {
+            //console.log(data)
+          });
       },
     }),
   }),
