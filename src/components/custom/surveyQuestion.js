@@ -366,10 +366,11 @@ const SurveyQuestion = (props) => {
     );
 
     setIsPostingResponse(false);
-    await props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
-    window.location.reload();
+
+    props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
   };
 
+  console.log("ANSLIST", ANSLIST);
   const handleNextClick2 = () => {
     let tempCurrentQuestion = "";
     setANSLIST([

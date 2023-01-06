@@ -66,6 +66,9 @@ const SurveyComplete = (props) => {
   const {
     data: { loading, error, getQuestionnaire },
   } = props.getQuestionnaire;
+  if (getQuestionnaire === null) {
+    window.location.reload();
+  }
   const text = getQuestionnaire?.endMsg;
   const linkify = (text) => {
     const urlRegex =

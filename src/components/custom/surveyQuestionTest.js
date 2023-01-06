@@ -367,7 +367,7 @@ const SurveyQuestionTest = (props) => {
 
     setIsPostingResponse(false);
     await props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleNextClick2 = () => {
