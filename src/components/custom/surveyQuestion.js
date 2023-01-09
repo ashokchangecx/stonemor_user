@@ -370,7 +370,7 @@ const SurveyQuestion = (props) => {
     props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
   };
 
-  console.log("ANSLIST", ANSLIST);
+
   const handleNextClick2 = () => {
     let tempCurrentQuestion = "";
     setANSLIST([
