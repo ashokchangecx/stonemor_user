@@ -342,6 +342,10 @@ const SurveyQuestionTest = (props) => {
     });
   };
 
+  const FILTERDANSLIST = [
+    ...new Map(ANSLIST.map((o) => [o.questionId, o])).values(),
+  ];
+
   const handleFinish = async (event) => {
     event.preventDefault();
     setIsPostingResponse(true);
@@ -349,7 +353,7 @@ const SurveyQuestionTest = (props) => {
 
     await Promise.all(
       [
-        ...ANSLIST,
+        ...FILTERDANSLIST,
         {
           questionId: currentQuestion?.id,
           answer: currentAnswer,
@@ -367,7 +371,6 @@ const SurveyQuestionTest = (props) => {
 
     setIsPostingResponse(false);
     await props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
-
   };
 
   const handleNextClick2 = () => {

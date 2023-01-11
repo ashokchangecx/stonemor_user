@@ -341,6 +341,9 @@ const SurveyQuestion = (props) => {
       complete: completedStatus,
     });
   };
+  const FILTERDANSLIST = [
+    ...new Map(ANSLIST.map((o) => [o.questionId, o])).values(),
+  ];
 
   const handleFinish = async (event) => {
     event.preventDefault();
@@ -349,7 +352,7 @@ const SurveyQuestion = (props) => {
 
     await Promise.all(
       [
-        ...ANSLIST,
+        ...FILTERDANSLIST,
         {
           questionId: currentQuestion?.id,
           answer: currentAnswer,
@@ -369,7 +372,6 @@ const SurveyQuestion = (props) => {
 
     props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
   };
-
 
   const handleNextClick2 = () => {
     let tempCurrentQuestion = "";
