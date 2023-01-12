@@ -831,141 +831,157 @@ const SurveyQuestionTest = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <div
-        style={{
-          // do your styles depending on your needs.
-          display: "flex",
-          justifyContent: "end",
-          alignItems: "center",
-          marginRight: "3rem",
-          marginTop: "10px",
-        }}
-      >
-        <Box display="flex" alignItems="center" justifyContent="end">
-          <Box width="0%" mr={2.5}>
-            <CircularProgress
-              variant="determinate"
-              value={normalise(props.value)}
-              size="4.75rem"
-              thickness={5}
-            />
-          </Box>
-          <Box minWidth={40}>
-            <Typography variant="h6" color="textSecondary">{`${Math.round(
-              normalise(props.value)
-            )}%`}</Typography>
-          </Box>
-        </Box>
-      </div>
-      <div
-        style={{
-          // do your styles depending on your needs.
-          display: "flex",
-          justifyContent: "end",
-          alignItems: "center",
-          marginRight: "3rem",
-          marginTop: "10px",
-        }}
-      >
-        <Typography>{secondsToTime(timer)}</Typography>
-      </div>
+      {questions?.length > 0 && (
+        <>
+          <div
+            style={{
+              // do your styles depending on your needs.
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+              marginRight: "3rem",
+              marginTop: "10px",
+            }}
+          >
+            <Box display="flex" alignItems="center" justifyContent="end">
+              <Box width="0%" mr={2.5}>
+                <CircularProgress
+                  variant="determinate"
+                  value={normalise(props.value)}
+                  size="4.75rem"
+                  thickness={5}
+                />
+              </Box>
+              <Box minWidth={40}>
+                <Typography variant="h6" color="textSecondary">{`${Math.round(
+                  normalise(props.value)
+                )}%`}</Typography>
+              </Box>
+            </Box>
+          </div>
+          <div
+            style={{
+              // do your styles depending on your needs.
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+              marginRight: "3rem",
+              marginTop: "10px",
+            }}
+          >
+            <Typography>{secondsToTime(timer)}</Typography>
+          </div>
+        </>
+      )}
       <Container maxWidth="md">
         <Typography className={classes.custom} variant="h5">
           {getQuestionnaire?.name}
         </Typography>
-        <div className={classes.cont}>
-          <div>{getQuestionView(currentQuestion)}</div>
-          <Box>
-            {/* <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              disabled={
-                currentQuestion?.order
-                  ? currentQuestion?.order === 1
-                  : questions?.findIndex(
-                      (q) => q?.id === currentQuestion?.id
-                    ) === 0
-              }
-              data-amplify-analytics-on="click"
-              data-amplify-analytics-name="click"
-              onClick={handlePreviousClick}
-            >
-              <ArrowBackIcon />
-              Prev
-            </Button> */}
-            {final ? (
-              <Button
-                variant="contained"
-                color="primary"
-                data-amplify-analytics-on="click"
-                onClick={handleFinish}
-                disabled={!currentAnswer}
-              >
-                Finish
-                {/* <ArrowForwardIcon /> */}
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                disabled={!currentAnswer}
-                data-amplify-analytics-on="click"
-                onClick={handleNextClick2}
-              >
-                Next
-                <ArrowForwardIcon />
-              </Button>
-            )}
-          </Box>
-        </div>
+        {questions?.length > 0 ? (
+          <div className={classes.cont}>
+            <div>{getQuestionView(currentQuestion)}</div>
+            <Box>
+              {/* <Button
+      variant="contained"
+      color="primary"
+      className={classes.button}
+      disabled={
+        currentQuestion?.order
+          ? currentQuestion?.order === 1
+          : questions?.findIndex(
+              (q) => q?.id === currentQuestion?.id
+            ) === 0
+      }
+      data-amplify-analytics-on="click"
+      data-amplify-analytics-name="click"
+      onClick={handlePreviousClick}
+    >
+      <ArrowBackIcon />
+      Prev
+    </Button> */}
+              {final ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  data-amplify-analytics-on="click"
+                  onClick={handleFinish}
+                  disabled={!currentAnswer}
+                >
+                  Finish
+                  {/* <ArrowForwardIcon /> */}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  disabled={!currentAnswer}
+                  data-amplify-analytics-on="click"
+                  onClick={handleNextClick2}
+                >
+                  Next
+                  <ArrowForwardIcon />
+                </Button>
+              )}
+            </Box>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ marginTop: "10px ", alignItems: "center" }}>
+              <Typography variant="h5" className={classes.textcolor}>
+                No Questions Founded For {getQuestionnaire?.name} Questionnaire
+              </Typography>
+            </Box>
+          </div>
+        )}
       </Container>
 
-      {/* <Box display="flex" alignItems="end" justifyContent="center" mt={5}>
-        <Typography>{secondsToTime(timer)}</Typography>
-      </Box> */}
-
       {/* <div>
-      <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
-        <Box width="20%" mr={1}>
-          <LinearProgress
-            variant="determinate"
-            value={normalise(props.value)}
-          />
-        </Box>
-        <Box minWidth={35}>
-          <Typography variant="body2" color="textSecondary">{`${Math.round(
-            normalise(props.value)
-          )}%`}</Typography>
-        </Box>
-      </Box>
-    </div> */}
-      {/* <div
-        style={{
-          // do your styles depending on your needs.
-          display: "flex",
-          justifyContent: "end",
-          alignItems: "center",
-          marginRight: "3rem",
-        }}
-      >
-        <Box display="flex" alignItems="center" justifyContent="end">
-          <Box width="0%" mr={2.5}>
-            <CircularProgress
+        <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
+          <Box width="20%" mr={1}>
+            <LinearProgress
               variant="determinate"
               value={normalise(props.value)}
-              size="5rem"
-              thickness={5}
             />
           </Box>
-          <Box minWidth={40}>
-            <Typography variant="h5" color="textSecondary">{`${Math.round(
+          <Box minWidth={35}>
+            <Typography variant="body2" color="textSecondary">{`${Math.round(
               normalise(props.value)
             )}%`}</Typography>
           </Box>
         </Box>
       </div> */}
+      {/* <div
+          style={{
+            // do your styles depending on your needs.
+            display: "flex",
+            justifyContent: "end",
+            alignItems: "center",
+            marginRight: "3rem",
+          }}
+        >
+          <Box display="flex" alignItems="center" justifyContent="end">
+            <Box width="0%" mr={2.5}>
+              <CircularProgress
+                variant="determinate"
+                value={normalise(props.value)}
+                size="5rem"
+                thickness={5}
+              />
+            </Box>
+            <Box minWidth={40}>
+              <Typography variant="h5" color="textSecondary">{`${Math.round(
+                normalise(props.value)
+              )}%`}</Typography>
+            </Box>
+          </Box>
+        </div> */}
     </div>
   );
   // }
