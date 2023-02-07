@@ -295,7 +295,8 @@ const SurveyQuestion = (props) => {
         finishTime: new Date().toISOString(),
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
-        surveyEntriesLocationId: params?.get("uid"),
+        surveyEntriesLocationId: params?.get("lid"),
+        LocationId: params?.get("lid"),
         testing: false,
         complete: completedStatus,
       });

@@ -1071,6 +1071,7 @@ export const createSurveyEntries = /* GraphQL */ `
       startTime
       finishTime
       questionnaireId
+      LocationId
       deleted
       archived
       testing
@@ -1119,6 +1120,7 @@ export const updateSurveyEntries = /* GraphQL */ `
       startTime
       finishTime
       questionnaireId
+      LocationId
       deleted
       archived
       testing
@@ -1167,6 +1169,7 @@ export const deleteSurveyEntries = /* GraphQL */ `
       startTime
       finishTime
       questionnaireId
+      LocationId
       deleted
       archived
       testing
