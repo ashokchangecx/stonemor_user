@@ -331,6 +331,7 @@ const SurveyQuestion = (props) => {
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
         surveyEntriesLocationId: params?.get("uid"),
+        LocationId: params?.get("lid"),
         testing: false,
         complete: completedStatus,
       });

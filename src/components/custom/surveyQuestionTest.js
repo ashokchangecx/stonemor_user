@@ -294,7 +294,8 @@ const SurveyQuestionTest = (props) => {
         finishTime: new Date().toISOString(),
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
-        surveyEntriesLocationId: params?.get("uid"),
+        surveyEntriesLocationId: params?.get("lid"),
+        LocationId: params?.get("lid"),
         testing: true,
         complete: completedStatus,
       });
@@ -328,7 +329,8 @@ const SurveyQuestionTest = (props) => {
         finishTime: new Date().toISOString(),
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
-        surveyEntriesLocationId: params?.get("uid"),
+        surveyEntriesLocationId: params?.get("lid"),
+        LocationId: params?.get("lid"),
         testing: true,
         complete: completedStatus,
       });
