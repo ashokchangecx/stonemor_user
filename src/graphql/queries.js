@@ -205,7 +205,7 @@ export const getQuestionnaire = /* GraphQL */ `
       createdAt
       updatedAt
 
-      question(limit: 200) {
+      question(limit: 200, filter: { deleted: { ne: true } }) {
         items {
           id
           qu
