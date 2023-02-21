@@ -523,11 +523,7 @@ const SurveyQuestion = (props) => {
               borderColor="transparent"
               style={{ margin: "10px 0px", color: "black" }}
             >
-              <Typography sx={{ paddingTop: 2 }}>
-                {" "}
-                Q.
-                {q?.qu}
-              </Typography>
+              <Typography sx={{ paddingTop: 2 }}> {q?.qu}</Typography>
               <Box style={{ margin: "50px 0px", color: "black" }}>
                 <StyledRating
                   name="customized-icons"
