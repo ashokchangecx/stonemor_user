@@ -11,6 +11,7 @@ import {
 
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import logo1 from "../../assets/MP Logo no com.png";
 import {
   createResponses,
@@ -437,19 +438,19 @@ const SurveyQuestion = (props) => {
     setHover("");
   };
 
-  // const handlePreviousClick = () => {
-  //   const lastAnswer = ANSLIST[ANSLIST.length - 1];
+  const handlePreviousClick = () => {
+    const lastAnswer = ANSLIST[ANSLIST.length - 1];
 
-  //   const PreQue = lastAnswer?.questionId;
+    const PreQue = lastAnswer?.questionId;
 
-  //   if (PreQue) {
-  //     setCurrentQuestion(questions.find((q) => q?.id === PreQue));
-  //     setCurrentAnswer(lastAnswer?.answer);
-  //     setCheck(lastAnswer?.answer);
-  //   }
-  //   setANSLIST(ANSLIST.slice(0, -1));
-  //   setHover("");
-  // };
+    if (PreQue) {
+      setCurrentQuestion(questions.find((q) => q?.id === PreQue));
+      setCurrentAnswer(lastAnswer?.answer);
+      setCheck(lastAnswer?.answer);
+    }
+    setANSLIST(ANSLIST.slice(0, -1));
+    setHover("");
+  };
 
   const RatingAns = Number(currentAnswer);
 
@@ -882,24 +883,24 @@ const SurveyQuestion = (props) => {
           <div className={classes.cont}>
             <div>{getQuestionView(currentQuestion)}</div>
             <Box>
-              {/* <Button
-    variant="contained"
-    color="primary"
-    className={classes.button}
-    disabled={
-      currentQuestion?.order
-        ? currentQuestion?.order === 1
-        : questions?.findIndex(
-            (q) => q?.id === currentQuestion?.id
-          ) === 0
-    }
-    data-amplify-analytics-on="click"
-    data-amplify-analytics-name="click"
-    onClick={handlePreviousClick}
-  >
-    <ArrowBackIcon />
-    Prev
-  </Button> */}
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                disabled={
+                  currentQuestion?.order
+                    ? currentQuestion?.order === 1
+                    : questions?.findIndex(
+                        (q) => q?.id === currentQuestion?.id
+                      ) === 0
+                }
+                data-amplify-analytics-on="click"
+                data-amplify-analytics-name="click"
+                onClick={handlePreviousClick}
+              >
+                <ArrowBackIcon />
+                Prev
+              </Button>
               {final ? (
                 <Button
                   variant="contained"
