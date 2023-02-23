@@ -11,8 +11,8 @@ import {
 
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import logo1 from "../../assets/MP Logo no com.png";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import {
   createResponses,
   createSurveyEntries,
@@ -134,6 +134,7 @@ const styles = {
     // backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
     backgroundSize: "cover",
     minHeight: "100vh",
+    backgroundColor: "#FFFFE8",
   },
 };
 const theme = createTheme();
@@ -296,10 +297,10 @@ const SurveyQuestion = (props) => {
         finishTime: new Date().toISOString(),
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
-        surveyEntriesLocationId: params?.get("lid"),
-        LocationId: params?.get("lid"),
+        surveyEntriesLocationId: params?.get("uid"),
         testing: false,
         complete: completedStatus,
+        icMail: false,
       });
     }
 
@@ -332,9 +333,9 @@ const SurveyQuestion = (props) => {
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
         surveyEntriesLocationId: params?.get("uid"),
-        LocationId: params?.get("lid"),
         testing: false,
         complete: completedStatus,
+        icMail: false,
       });
     }
   };
@@ -464,7 +465,10 @@ const SurveyQuestion = (props) => {
               style={{ margin: "10px 0", color: "black" }}
               id="demo-radio-buttons-group-label"
             >
-              <Typography sx={{ paddingTop: 2 }}>
+              <Typography
+                sx={{ paddingTop: 2, fontWeight: "bold" }}
+                variant="h6"
+              >
                 {" "}
                 Q.
                 {q?.qu}
@@ -524,7 +528,11 @@ const SurveyQuestion = (props) => {
               borderColor="transparent"
               style={{ margin: "10px 0px", color: "black" }}
             >
-              <Typography sx={{ paddingTop: 2 }}> {q?.qu}</Typography>
+              <Typography sx={{ paddingTop: 2 }}>
+                {" "}
+                Q.
+                {q?.qu}
+              </Typography>
               <Box style={{ margin: "50px 0px", color: "black" }}>
                 <StyledRating
                   name="customized-icons"
@@ -816,7 +824,8 @@ const SurveyQuestion = (props) => {
         <DialogTitle id="alert-dialog-title">{"Stonemor"}</DialogTitle>
         <DialogContent>
           <DialogContentText
-          // id="alert-dialog-description"
+            // id="alert-dialog-description"
+            style={{}}
           >
             {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
             this survey
@@ -839,7 +848,7 @@ const SurveyQuestion = (props) => {
             style={{
               // do your styles depending on your needs.
               display: "flex",
-              justifyContent: "end",
+              justifyContent: "center",
               alignItems: "center",
               marginRight: "3rem",
               marginTop: "10px",
@@ -875,8 +884,17 @@ const SurveyQuestion = (props) => {
           </div>
         </>
       )}
-      <Container maxWidth="md">
-        <Typography className={classes.custom} variant="h5">
+      <Container
+        maxWidth="md"
+        style={{
+          background: "#F8FFDB",
+        }}
+      >
+        <Typography
+          className={classes.custom}
+          variant="h5"
+          style={{ fontSize: "30px" }}
+        >
           {getQuestionnaire?.name}
         </Typography>
         {questions?.length > 0 ? (
@@ -984,6 +1002,17 @@ const SurveyQuestion = (props) => {
           </Box>
         </Box>
       </div> */}
+      <footer
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "3rem",
+        }}
+      >
+        <typography>&copy; Copyright Stonemor 2023</typography>
+      </footer>
     </div>
   );
   // }

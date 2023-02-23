@@ -1076,6 +1076,7 @@ export const createSurveyEntries = /* GraphQL */ `
       archived
       testing
       complete
+      icMail
       createdAt
       updatedAt
       responses {
@@ -1123,6 +1124,7 @@ export const updateSurveyEntries = /* GraphQL */ `
       LocationId
       deleted
       archived
+      icMail
       testing
       complete
       createdAt
@@ -1174,6 +1176,7 @@ export const deleteSurveyEntries = /* GraphQL */ `
       archived
       testing
       complete
+      icMail
       createdAt
       updatedAt
       responses {

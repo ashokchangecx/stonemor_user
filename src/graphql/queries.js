@@ -560,6 +560,7 @@ export const getSurveyEntries = /* GraphQL */ `
       questionnaireId
       deleted
       archived
+      icMail
       testing
       complete
       createdAt
@@ -611,6 +612,7 @@ export const listSurveyEntriess = /* GraphQL */ `
         deleted
         archived
         testing
+        icMail
         complete
         createdAt
         updatedAt
