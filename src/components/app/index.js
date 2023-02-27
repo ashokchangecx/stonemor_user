@@ -255,6 +255,7 @@ function App() {
             path="/surveyComplete/:questionnaireID"
             component={SurveyComplete}
           />
+          <Route path="/surveyComplete" component={SurveyComplete} />
         </BrowserRouter>
       </MuiThemeProvider>
     </div>

@@ -861,15 +861,51 @@ export const createResponses = /* GraphQL */ `
           updatedAt
         }
       }
+      question {
+        id
+        qu
+        type
+        isSelf
+        isDependent
+        listOptions {
+          listValue
+          nextQuestion
+          isText
+          isMultiple
+        }
+        deleted
+        archived
+        order
+        dependent {
+          id
+        }
+        createdAt
+        updatedAt
+        questionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          deleted
+          archived
+          endMsg
+          createdAt
+          updatedAt
+        }
+      }
       group {
         id
         startTime
         finishTime
         questionnaireId
+        LocationId
         deleted
         archived
         testing
         complete
+        icMail
         createdAt
         updatedAt
         responses {
@@ -888,6 +924,29 @@ export const createResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
+          deleted
+          archived
+          createdAt
+          updatedAt
+        }
+      }
+      ratingRes {
+        id
+        questionnaireId
+        deleted
+        archived
+        testing
+        complete
+        ratingRes
+        createdAt
+        updatedAt
+        ratingResponses {
+          nextToken
+        }
+        by {
+          id
+          name
+          email
           deleted
           archived
           createdAt
@@ -943,15 +1002,51 @@ export const updateResponses = /* GraphQL */ `
           updatedAt
         }
       }
+      question {
+        id
+        qu
+        type
+        isSelf
+        isDependent
+        listOptions {
+          listValue
+          nextQuestion
+          isText
+          isMultiple
+        }
+        deleted
+        archived
+        order
+        dependent {
+          id
+        }
+        createdAt
+        updatedAt
+        questionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          deleted
+          archived
+          endMsg
+          createdAt
+          updatedAt
+        }
+      }
       group {
         id
         startTime
         finishTime
         questionnaireId
+        LocationId
         deleted
         archived
         testing
         complete
+        icMail
         createdAt
         updatedAt
         responses {
@@ -970,6 +1065,29 @@ export const updateResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
+          deleted
+          archived
+          createdAt
+          updatedAt
+        }
+      }
+      ratingRes {
+        id
+        questionnaireId
+        deleted
+        archived
+        testing
+        complete
+        ratingRes
+        createdAt
+        updatedAt
+        ratingResponses {
+          nextToken
+        }
+        by {
+          id
+          name
+          email
           deleted
           archived
           createdAt
@@ -1025,15 +1143,51 @@ export const deleteResponses = /* GraphQL */ `
           updatedAt
         }
       }
+      question {
+        id
+        qu
+        type
+        isSelf
+        isDependent
+        listOptions {
+          listValue
+          nextQuestion
+          isText
+          isMultiple
+        }
+        deleted
+        archived
+        order
+        dependent {
+          id
+        }
+        createdAt
+        updatedAt
+        questionnaire {
+          id
+          name
+          description
+          image
+          type
+          introMsg
+          deleted
+          archived
+          endMsg
+          createdAt
+          updatedAt
+        }
+      }
       group {
         id
         startTime
         finishTime
         questionnaireId
+        LocationId
         deleted
         archived
         testing
         complete
+        icMail
         createdAt
         updatedAt
         responses {
@@ -1052,6 +1206,29 @@ export const deleteResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
+          deleted
+          archived
+          createdAt
+          updatedAt
+        }
+      }
+      ratingRes {
+        id
+        questionnaireId
+        deleted
+        archived
+        testing
+        complete
+        ratingRes
+        createdAt
+        updatedAt
+        ratingResponses {
+          nextToken
+        }
+        by {
+          id
+          name
+          email
           deleted
           archived
           createdAt
@@ -1203,6 +1380,121 @@ export const deleteSurveyEntries = /* GraphQL */ `
         id
         location
         inchargeEmail
+        deleted
+        archived
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const createIncompletedSurveyEntriesRating = /* GraphQL */ `
+  mutation CreateIncompletedSurveyEntriesRating(
+    $input: CreateIncompletedSurveyEntriesRatingInput!
+    $condition: ModelIncompletedSurveyEntriesRatingConditionInput
+  ) {
+    createIncompletedSurveyEntriesRating(input: $input, condition: $condition) {
+      id
+      questionnaireId
+      deleted
+      archived
+      testing
+      complete
+      ratingRes
+      createdAt
+      updatedAt
+      ratingResponses {
+        items {
+          id
+          res
+          deleted
+          archived
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      by {
+        id
+        name
+        email
+        deleted
+        archived
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const updateIncompletedSurveyEntriesRating = /* GraphQL */ `
+  mutation UpdateIncompletedSurveyEntriesRating(
+    $input: UpdateIncompletedSurveyEntriesRatingInput!
+    $condition: ModelIncompletedSurveyEntriesRatingConditionInput
+  ) {
+    updateIncompletedSurveyEntriesRating(input: $input, condition: $condition) {
+      id
+      questionnaireId
+      deleted
+      archived
+      testing
+      complete
+      ratingRes
+      createdAt
+      updatedAt
+      ratingResponses {
+        items {
+          id
+          res
+          deleted
+          archived
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      by {
+        id
+        name
+        email
+        deleted
+        archived
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const deleteIncompletedSurveyEntriesRating = /* GraphQL */ `
+  mutation DeleteIncompletedSurveyEntriesRating(
+    $input: DeleteIncompletedSurveyEntriesRatingInput!
+    $condition: ModelIncompletedSurveyEntriesRatingConditionInput
+  ) {
+    deleteIncompletedSurveyEntriesRating(input: $input, condition: $condition) {
+      id
+      questionnaireId
+      deleted
+      archived
+      testing
+      complete
+      ratingRes
+      createdAt
+      updatedAt
+      ratingResponses {
+        items {
+          id
+          res
+          deleted
+          archived
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      by {
+        id
+        name
+        email
         deleted
         archived
         createdAt
