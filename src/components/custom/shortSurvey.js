@@ -181,32 +181,72 @@ const shortSurvey = (props) => {
         <Typography component="legend" variant="h5">
           Rate our service?
         </Typography>
-        <Box sx={{ display: "flex", gap: "4px", mt: "40px" }}>
-          {[...Array(10)].map((_, index) => (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ position: "relative" }}>
             <Box
-              key={index + 1}
               sx={{
-                width: "40px",
-                height: "40px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: value >= index + 1 ? "red" : "white",
-                boxShadow: "0px 2px 6px #ccc",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: value >= index + 1 ? "white" : "gray",
-                  "& ~ *": {
-                    backgroundColor: value >= index + 1 ? "white" : "gray",
-                  },
-                },
+                position: "absolute",
+                left: "0px",
+                top: "15%",
+                fontSize: "13px",
               }}
-              onClick={() => handleClick(index)}
             >
-              {index + 1}
+              Not at all likely
             </Box>
-          ))}
+            <Box
+              sx={{
+                position: "absolute",
+                right: "0px",
+                top: "15%",
+                fontSize: "13px",
+              }}
+            >
+              Extremely likely
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "4px",
+                mt: "40px",
+              }}
+            >
+              {[...Array(10)].map((_, index) => (
+                <Box
+                  key={index + 1}
+                  sx={{
+                    width: "40px",
+                    height: "40px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor:
+                      value >= index + 1 ? "#bb1e1e" : "transparent",
+                    boxShadow: "0px 2px 6px #ccc",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor:
+                        value >= index + 1 ? "transparent" : "#bb1e1e",
+                      "& ~ ": {
+                        backgroundColor:
+                          value >= index + 1 ? "#bb1e1e" : "#eee",
+                      },
+                    },
+                  }}
+                  onClick={() => handleClick(index)}
+                >
+                  {index + 1}
+                </Box>
+              ))}
+            </Box>
+          </Box>
         </Box>
       </div>
     </div>
