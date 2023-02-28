@@ -63,12 +63,11 @@ theme.typography.h3 = {
 
 const shortSurveyComplete = (props) => {
   const classes = useStyles();
-  console.log(props);
+
   const {
     data: { loading, error, getQuestionnaire },
   } = props.getQuestionnaire;
 
-  console.log("getQuestionnaire", getQuestionnaire);
   if (getQuestionnaire === null) {
     window.location.reload();
   }

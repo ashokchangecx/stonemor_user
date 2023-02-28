@@ -26,6 +26,7 @@ import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied"
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@material-ui/icons/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
+
 import {
   AppBar,
   Box,
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme) =>
       margin: theme.spacing(2),
     },
     button: {
-      margin: theme.spacing(2),
+      margin: theme.spacing(5),
     },
     custom: {
       margin: theme.spacing(3),
@@ -297,7 +298,8 @@ const SurveyQuestion = (props) => {
         finishTime: new Date().toISOString(),
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
-        surveyEntriesLocationId: params?.get("uid"),
+        surveyEntriesLocationId: params?.get("lid"),
+        LocationId: params?.get("lid"),
         testing: false,
         complete: completedStatus,
         icMail: false,
@@ -332,7 +334,7 @@ const SurveyQuestion = (props) => {
         finishTime: new Date().toISOString(),
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
-        surveyEntriesLocationId: params?.get("uid"),
+        surveyEntriesLocationId: params?.get("lid"),
         testing: false,
         complete: completedStatus,
         icMail: false,

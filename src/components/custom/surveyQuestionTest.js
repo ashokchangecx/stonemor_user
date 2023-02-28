@@ -12,6 +12,7 @@ import {
 import { v4 as uuid } from "uuid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import logo1 from "../../assets/MP Logo no com.png";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import {
   createResponses,
   createSurveyEntries,
@@ -46,6 +47,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  ThemeProvider,
   Toolbar,
   Typography,
   withStyles,
@@ -67,7 +69,7 @@ const useStyles = makeStyles((theme) =>
       margin: theme.spacing(2),
     },
     button: {
-      margin: theme.spacing(2),
+      margin: theme.spacing(5),
     },
     custom: {
       margin: theme.spacing(3),
@@ -132,6 +134,7 @@ const styles = {
     // backgroundImage: `url('https://basis.net/wp-content/uploads/2021/10/house_plant_home.jpeg')`,
     backgroundSize: "cover",
     minHeight: "100vh",
+    backgroundColor: "#FFFFE8",
   },
 };
 const theme = createTheme();
@@ -256,9 +259,9 @@ const SurveyQuestionTest = (props) => {
   const timeformat = sliceNumber(time, 2);
 
   function secondsToTime(e) {
-    const h = Math.floor(e / 3600)
-        .toString()
-        .padStart(2, "0"),
+    const //  h = Math.floor(e / 3600)
+      //     .toString()
+      //     .padStart(2, "0"),
       m = Math.floor((e % 3600) / 60)
         .toString()
         .padStart(2, "0"),
@@ -298,6 +301,7 @@ const SurveyQuestionTest = (props) => {
         LocationId: params?.get("lid"),
         testing: true,
         complete: completedStatus,
+        icMail: false,
       });
     }
 
@@ -330,9 +334,9 @@ const SurveyQuestionTest = (props) => {
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
         surveyEntriesLocationId: params?.get("lid"),
-        LocationId: params?.get("lid"),
         testing: true,
         complete: completedStatus,
+        icMail: false,
       });
     }
   };
@@ -343,7 +347,6 @@ const SurveyQuestionTest = (props) => {
       complete: completedStatus,
     });
   };
-
   const FILTERDANSLIST = [
     ...new Map(ANSLIST.map((o) => [o.questionId, o])).values(),
   ];
@@ -372,7 +375,8 @@ const SurveyQuestionTest = (props) => {
     );
 
     setIsPostingResponse(false);
-    await props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
+
+    props.history.push(`/surveyComplete/${getQuestionnaire.id} `);
   };
 
   const handleNextClick2 = () => {
@@ -448,7 +452,11 @@ const SurveyQuestionTest = (props) => {
     }
     setANSLIST(ANSLIST.slice(0, -1));
     setHover("");
+    if (currentQuestion?.order > 1) {
+      handleUpdateSurveyEntries();
+    }
   };
+
   const RatingAns = Number(currentAnswer);
 
   const getQuestionView = (q) => {
@@ -461,7 +469,10 @@ const SurveyQuestionTest = (props) => {
               style={{ margin: "10px 0", color: "black" }}
               id="demo-radio-buttons-group-label"
             >
-              <Typography sx={{ paddingTop: 2 }}>
+              <Typography
+                sx={{ paddingTop: 2, fontWeight: "bold" }}
+                variant="h6"
+              >
                 {" "}
                 Q.
                 {q?.qu}
@@ -800,6 +811,7 @@ const SurveyQuestionTest = (props) => {
   //   );
   // }
   // if (!SurveyEntryFilter?.id) {
+
   return (
     <div className={classes.root} style={styles.paperContainer}>
       <AppBar position="sticky" style={{ backgroundColor: "#fff" }}>
@@ -816,7 +828,8 @@ const SurveyQuestionTest = (props) => {
         <DialogTitle id="alert-dialog-title">{"Stonemor"}</DialogTitle>
         <DialogContent>
           <DialogContentText
-          // id="alert-dialog-description"
+            // id="alert-dialog-description"
+            style={{}}
           >
             {getQuestionnaire?.introMsg}.Need {timeformat} minutes to complete
             this survey
@@ -839,7 +852,7 @@ const SurveyQuestionTest = (props) => {
             style={{
               // do your styles depending on your needs.
               display: "flex",
-              justifyContent: "end",
+              justifyContent: "center",
               alignItems: "center",
               marginRight: "3rem",
               marginTop: "10px",
@@ -875,32 +888,41 @@ const SurveyQuestionTest = (props) => {
           </div>
         </>
       )}
-      <Container maxWidth="md">
-        <Typography className={classes.custom} variant="h5">
+      <Container
+        maxWidth="md"
+        style={{
+          background: "#F8FFDB",
+        }}
+      >
+        <Typography
+          className={classes.custom}
+          variant="h5"
+          style={{ fontSize: "30px" }}
+        >
           {getQuestionnaire?.name}
         </Typography>
         {questions?.length > 0 ? (
           <div className={classes.cont}>
             <div>{getQuestionView(currentQuestion)}</div>
             <Box>
-              {/* <Button
-      variant="contained"
-      color="primary"
-      className={classes.button}
-      disabled={
-        currentQuestion?.order
-          ? currentQuestion?.order === 1
-          : questions?.findIndex(
-              (q) => q?.id === currentQuestion?.id
-            ) === 0
-      }
-      data-amplify-analytics-on="click"
-      data-amplify-analytics-name="click"
-      onClick={handlePreviousClick}
-    >
-      <ArrowBackIcon />
-      Prev
-    </Button> */}
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                disabled={
+                  currentQuestion?.order
+                    ? currentQuestion?.order === 1
+                    : questions?.findIndex(
+                        (q) => q?.id === currentQuestion?.id
+                      ) === 0
+                }
+                data-amplify-analytics-on="click"
+                data-amplify-analytics-name="click"
+                onClick={handlePreviousClick}
+              >
+                <ArrowBackIcon />
+                Prev
+              </Button>
               {final ? (
                 <Button
                   variant="contained"
@@ -945,45 +967,56 @@ const SurveyQuestionTest = (props) => {
       </Container>
 
       {/* <div>
-        <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
-          <Box width="20%" mr={1}>
-            <LinearProgress
+      <Box display="flex" alignItems="center" justifyContent="center" mt={10}>
+        <Box width="20%" mr={1}>
+          <LinearProgress
+            variant="determinate"
+            value={normalise(props.value)}
+          />
+        </Box>
+        <Box minWidth={35}>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(
+            normalise(props.value)
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    </div> */}
+      {/* <div
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "center",
+          marginRight: "3rem",
+        }}
+      >
+        <Box display="flex" alignItems="center" justifyContent="end">
+          <Box width="0%" mr={2.5}>
+            <CircularProgress
               variant="determinate"
               value={normalise(props.value)}
+              size="5rem"
+              thickness={5}
             />
           </Box>
-          <Box minWidth={35}>
-            <Typography variant="body2" color="textSecondary">{`${Math.round(
+          <Box minWidth={40}>
+            <Typography variant="h5" color="textSecondary">{`${Math.round(
               normalise(props.value)
             )}%`}</Typography>
           </Box>
         </Box>
       </div> */}
-      {/* <div
-          style={{
-            // do your styles depending on your needs.
-            display: "flex",
-            justifyContent: "end",
-            alignItems: "center",
-            marginRight: "3rem",
-          }}
-        >
-          <Box display="flex" alignItems="center" justifyContent="end">
-            <Box width="0%" mr={2.5}>
-              <CircularProgress
-                variant="determinate"
-                value={normalise(props.value)}
-                size="5rem"
-                thickness={5}
-              />
-            </Box>
-            <Box minWidth={40}>
-              <Typography variant="h5" color="textSecondary">{`${Math.round(
-                normalise(props.value)
-              )}%`}</Typography>
-            </Box>
-          </Box>
-        </div> */}
+      <footer
+        style={{
+          // do your styles depending on your needs.
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "3rem",
+        }}
+      >
+        <typography>&copy; Copyright Stonemor 2023</typography>
+      </footer>
     </div>
   );
   // }
@@ -1030,37 +1063,6 @@ const SurveyQuestionarrireQuestion = compose(
   graphql(gql(updateSurveyEntries), {
     props: (props) => ({
       onUpdateSurveyEntries: (ip) => {
-        props.mutate({
-          variables: {
-            input: ip,
-          },
-          update: (store, { data: { updateSurveyEntries } }) => {
-            const query = gql(listSurveyEntriess);
-
-            const data = store.readQuery({
-              query,
-            });
-            if (data?.listSurveyEntriess?.items?.length > 0) {
-              data.listSurveyEntriess.items = [
-                ...data.listSurveyEntriess.items.filter(
-                  (item) => item?.id !== updateSurveyEntries?.id
-                ),
-                updateSurveyEntries,
-              ];
-            }
-            store.writeQuery({
-              query,
-              data,
-              variables: { filter: null, limit: null, nextToken: null },
-            });
-          },
-        });
-      },
-    }),
-  }),
-  graphql(gql(updateSurveyEntries), {
-    props: (props) => ({
-      onUpdateSurveyEntries: (ip) => {
         props
           .mutate({
             variables: {
@@ -1070,6 +1072,38 @@ const SurveyQuestionarrireQuestion = compose(
           .then((data) => {
             //console.log(data)
           });
+      },
+    }),
+  }),
+
+  graphql(gql(updateResponses), {
+    props: (props) => ({
+      onUpdateResponses: (ip) => {
+        props.mutate({
+          variables: {
+            input: ip,
+          },
+          update: (store, { data: { updateResponses } }) => {
+            const query = gql(listResponsess);
+
+            const data = store.readQuery({
+              query,
+            });
+            if (data?.listResponsess?.items?.length > 0) {
+              data.listResponsess.items = [
+                ...data.listResponsess.items.filter(
+                  (item) => item?.id !== updateResponses?.id
+                ),
+                updateResponses,
+              ];
+            }
+            store.writeQuery({
+              query,
+              data,
+              variables: { filter: null, limit: null, nextToken: null },
+            });
+          },
+        });
       },
     }),
   }),
@@ -1091,7 +1125,6 @@ const SurveyQuestionarrireQuestion = compose(
     options: (props) => ({
       errorPolicy: "all",
       fetchPolicy: "cache-and-network",
-      variables: { limit: 300000 },
     }),
     props: (props) => {
       return {

@@ -37,14 +37,53 @@ const styles = {
 
 const useStyles = makeStyles((theme) =>
   createStyles({
+    card: {
+      maxWidth: 345,
+    },
+    media: {
+      // object-fit is not supported by IE 11.
+      objectFit: "cover",
+    },
+    table: {
+      minWidth: 700,
+    },
+    progress: {
+      margin: theme.spacing(2),
+    },
     button: {
       margin: theme.spacing(2),
+      marginTop: 100,
+    },
+    custom: {
+      margin: theme.spacing(3),
+      textAlign: "center",
+    },
+    cont: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "10px",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 100,
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
     logo: {
       maxWidth: 170,
       paddingTop: "15px",
       paddingBottom: "15px",
       paddingLeft: "10px",
+    },
+    loadCenter: {
+      display: "flex",
+      marginTop: "16rem",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    progressBar: {
+      with: "20%",
     },
     text: {
       marginTop: 100,
@@ -58,6 +97,7 @@ const useStyles = makeStyles((theme) =>
     },
     textcolor: {
       // color: "#fafafa",
+      // fontWeight: 800,
     },
   })
 );
@@ -70,21 +110,23 @@ theme.typography.h3 = {
     textAlign: "center",
   },
   [theme.breakpoints.up("md")]: {
-    fontSize: "2rem", 
+    fontSize: "2rem",
   },
 };
 
 const shortSurvey = (props) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+
   const [isPostingResponse, setIsPostingResponse] = useState(false);
+
   const classes = useStyles();
   const {
     data: { loading, error, getSurveyEntries },
   } = props.getSurveyEntries;
-  console.log("getSurveyEntries", getSurveyEntries);
+
   const [value, setValue] = useState(params?.get("rating"));
-  console.log("props", props?.match?.params?.surveyyEntryID);
+
   // if (getSurveyEntries === null) {
   //   window.location.reload();
   // }
@@ -96,13 +138,17 @@ const shortSurvey = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     setIsPostingResponse(true);
     handleUpdateSurveyEntries();
     setIsPostingResponse(false);
     props.history.push(
       `/shortSurveyComplete/${getSurveyEntries?.questionnaireId} `
     );
+  };
+
+  const handleClick = (index) => {
+    setValue(index + 1);
+    handleSubmit();
   };
 
   if (isPostingResponse) {
@@ -131,52 +177,36 @@ const shortSurvey = (props) => {
         </Toolbar>
       </AppBar>
 
-      <div className={classes.text}>
-        <Box
-          sx={{
-            width: "400px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "4px",
-          }}
-        >
-          <Typography component="legend" variant="h5">
-            Rate our service?
-          </Typography>
-          <Box sx={{ display: "flex", gap: "4px", mt: "40px" }}>
-            {[...Array(10)].map((_, index) => (
-              <Box
-                key={index + 1}
-                sx={{
-                  width: "40px",
-                  height: "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: value >= index + 1 ? "red" : "white",
-                  boxShadow: "0px 2px 6px #ccc",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
+      <div className={classes.cont}>
+        <Typography component="legend" variant="h5">
+          Rate our service?
+        </Typography>
+        <Box sx={{ display: "flex", gap: "4px", mt: "40px" }}>
+          {[...Array(10)].map((_, index) => (
+            <Box
+              key={index + 1}
+              sx={{
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: value >= index + 1 ? "red" : "white",
+                boxShadow: "0px 2px 6px #ccc",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  backgroundColor: value >= index + 1 ? "white" : "gray",
+                  "& ~ *": {
                     backgroundColor: value >= index + 1 ? "white" : "gray",
-                    "& ~ *": {
-                      backgroundColor: value >= index + 1 ? "white" : "gray",
-                    },
                   },
-                }}
-                onClick={() => setValue(index + 1)}
-              >
-                {index + 1}
-              </Box>
-            ))}
-          </Box>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
-          {/* <Typography variant="subtitle1" sx={{ color: "red" }}>
-            You rated us {value} out of 10.
-          </Typography> */}
+                },
+              }}
+              onClick={() => handleClick(index)}
+            >
+              {index + 1}
+            </Box>
+          ))}
         </Box>
       </div>
     </div>

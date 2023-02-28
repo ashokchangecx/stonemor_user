@@ -903,6 +903,7 @@ export const createResponses = /* GraphQL */ `
         LocationId
         deleted
         archived
+        ratingRes
         testing
         complete
         icMail
@@ -924,29 +925,6 @@ export const createResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
-          deleted
-          archived
-          createdAt
-          updatedAt
-        }
-      }
-      ratingRes {
-        id
-        questionnaireId
-        deleted
-        archived
-        testing
-        complete
-        ratingRes
-        createdAt
-        updatedAt
-        ratingResponses {
-          nextToken
-        }
-        by {
-          id
-          name
-          email
           deleted
           archived
           createdAt
@@ -1044,6 +1022,7 @@ export const updateResponses = /* GraphQL */ `
         LocationId
         deleted
         archived
+        ratingRes
         testing
         complete
         icMail
@@ -1065,29 +1044,6 @@ export const updateResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
-          deleted
-          archived
-          createdAt
-          updatedAt
-        }
-      }
-      ratingRes {
-        id
-        questionnaireId
-        deleted
-        archived
-        testing
-        complete
-        ratingRes
-        createdAt
-        updatedAt
-        ratingResponses {
-          nextToken
-        }
-        by {
-          id
-          name
-          email
           deleted
           archived
           createdAt
@@ -1185,6 +1141,7 @@ export const deleteResponses = /* GraphQL */ `
         LocationId
         deleted
         archived
+        ratingRes
         testing
         complete
         icMail
@@ -1206,29 +1163,6 @@ export const deleteResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
-          deleted
-          archived
-          createdAt
-          updatedAt
-        }
-      }
-      ratingRes {
-        id
-        questionnaireId
-        deleted
-        archived
-        testing
-        complete
-        ratingRes
-        createdAt
-        updatedAt
-        ratingResponses {
-          nextToken
-        }
-        by {
-          id
-          name
-          email
           deleted
           archived
           createdAt
