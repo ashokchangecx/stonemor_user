@@ -31,6 +31,8 @@ import Home from "../home";
 import SurveyQuestionarrireQuestion from "../custom/surveyQuestion";
 import SurveyQuestionarrireQuestionTest from "../custom/surveyQuestionTest";
 import SurveyComplete from "../custom/surveyComplete";
+import shortSurvey from "../custom/shortSurvey";
+import shortSurveyComplete from "../custom/shortSurveyComplete";
 import { createTheme } from "@material-ui/core/styles";
 import orange from "@material-ui/core/colors/orange";
 import indigo from "@material-ui/core/colors/indigo";
@@ -255,7 +257,11 @@ function App() {
             path="/surveyComplete/:questionnaireID"
             component={SurveyComplete}
           />
-          <Route path="/surveyComplete" component={SurveyComplete} />
+          <Route
+            path="/shortSurveyComplete/:questionnaireID"
+            component={shortSurveyComplete}
+          />
+          <Route path="/shortsurvey/:surveyyEntryID" component={shortSurvey} />
         </BrowserRouter>
       </MuiThemeProvider>
     </div>

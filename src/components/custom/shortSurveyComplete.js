@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
 import { compose, graphql, withApollo } from "react-apollo";
 import logo from "../../assets/MP Logo no com.png";
@@ -60,15 +61,16 @@ theme.typography.h3 = {
   },
 };
 
-const SurveyComplete = (props) => {
+const shortSurveyComplete = (props) => {
   const classes = useStyles();
-
+  console.log(props);
   const {
     data: { loading, error, getQuestionnaire },
   } = props.getQuestionnaire;
+
+  console.log("getQuestionnaire", getQuestionnaire);
   if (getQuestionnaire === null) {
     window.location.reload();
-  } else {
   }
 
   const text = getQuestionnaire?.endMsg;
@@ -132,6 +134,5 @@ const SurveyQuestionComplite = compose(
       };
     },
   })
-)(SurveyComplete);
-
+)(shortSurveyComplete);
 export default withApollo(SurveyQuestionComplite);

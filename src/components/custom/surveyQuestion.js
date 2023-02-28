@@ -451,6 +451,9 @@ const SurveyQuestion = (props) => {
     }
     setANSLIST(ANSLIST.slice(0, -1));
     setHover("");
+    if (currentQuestion?.order > 1) {
+      handleUpdateSurveyEntries();
+    }
   };
 
   const RatingAns = Number(currentAnswer);
