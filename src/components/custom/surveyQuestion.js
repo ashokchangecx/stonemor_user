@@ -335,6 +335,7 @@ const SurveyQuestion = (props) => {
         questionnaireId: getQuestionnaire?.id,
         surveyEntriesById: params?.get("uid"),
         surveyEntriesLocationId: params?.get("lid"),
+        LocationId: params?.get("lid"),
         testing: false,
         complete: completedStatus,
         icMail: false,
