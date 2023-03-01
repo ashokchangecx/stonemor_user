@@ -1017,7 +1017,7 @@ const SurveyQuestion = (props) => {
           marginTop: "3rem",
         }}
       >
-        <typography>&copy; Copyright Stonemor 2023</typography>
+        <Typography>&copy; Copyright Stonemor 2023</Typography>
       </footer>
     </div>
   );

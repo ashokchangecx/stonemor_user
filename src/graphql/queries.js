@@ -514,6 +514,7 @@ export const getResponses = /* GraphQL */ `
         LocationId
         deleted
         archived
+        ratingRes
         testing
         complete
         icMail
@@ -535,29 +536,6 @@ export const getResponses = /* GraphQL */ `
           id
           location
           inchargeEmail
-          deleted
-          archived
-          createdAt
-          updatedAt
-        }
-      }
-      ratingRes {
-        id
-        questionnaireId
-        deleted
-        archived
-        testing
-        complete
-        ratingRes
-        createdAt
-        updatedAt
-        ratingResponses {
-          nextToken
-        }
-        by {
-          id
-          name
-          email
           deleted
           archived
           createdAt
@@ -613,20 +591,10 @@ export const listResponsess = /* GraphQL */ `
           LocationId
           deleted
           archived
+          ratingRes
           testing
           complete
           icMail
-          createdAt
-          updatedAt
-        }
-        ratingRes {
-          id
-          questionnaireId
-          deleted
-          archived
-          testing
-          complete
-          ratingRes
           createdAt
           updatedAt
         }
