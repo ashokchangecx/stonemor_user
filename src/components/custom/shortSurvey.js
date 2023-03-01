@@ -127,6 +127,8 @@ const shortSurvey = (props) => {
 
   const [value, setValue] = useState(params?.get("rating"));
 
+  console.log("value", value);
+
   // if (getSurveyEntries === null) {
   //   window.location.reload();
   // }
@@ -148,7 +150,9 @@ const shortSurvey = (props) => {
 
   const handleClick = (index) => {
     setValue(index + 1);
-    handleSubmit();
+    if (value) {
+      handleSubmit();
+    }
   };
 
   if (isPostingResponse) {
@@ -226,7 +230,7 @@ const shortSurvey = (props) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: value >= index + 1 ? "white" : "#bb1e1e",
+
                     backgroundColor: value >= index + 1 ? "#bb1e1e" : "white",
                     boxShadow: "0px 2px 6px #ccc",
                     cursor: "pointer",
