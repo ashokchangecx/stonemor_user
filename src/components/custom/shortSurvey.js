@@ -203,7 +203,7 @@ const shortSurvey = (props) => {
               sx={{
                 position: "absolute",
                 right: "0px",
-                top: "15%",
+                top: "110%",
                 fontSize: "13px",
               }}
             >
