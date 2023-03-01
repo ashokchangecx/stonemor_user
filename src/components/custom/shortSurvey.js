@@ -25,6 +25,7 @@ import gql from "graphql-tag";
 import { useState } from "react";
 import { Button } from "aws-amplify-react";
 import { getQuestionnaire, getSurveyEntries } from "../../graphql/queries";
+import { useEffect } from "react";
 
 const styles = {
   paperContainer: {
@@ -126,6 +127,7 @@ const shortSurvey = (props) => {
   } = props.getSurveyEntries;
 
   const [value, setValue] = useState(params?.get("rating"));
+  const [isMounted, setIsMounted] = useState(false);
 
   console.log("value", value);
 
@@ -137,23 +139,31 @@ const shortSurvey = (props) => {
       id: props?.match?.params?.surveyyEntryID,
       ratingRes: value,
     });
-  };
 
-  const handleSubmit = async (event) => {
-    setIsPostingResponse(true);
-    handleUpdateSurveyEntries();
-    setIsPostingResponse(false);
     props.history.push(
       `/shortSurveyComplete/${getSurveyEntries?.questionnaireId} `
     );
   };
 
-  const handleClick = (index) => {
-    setValue(index + 1);
+  const handleSubmit = async (event) => {
     if (value) {
-      handleSubmit();
+      setIsPostingResponse(true);
+      handleUpdateSurveyEntries();
+      setIsPostingResponse(false);
     }
   };
+
+  const handleClick = (index) => {
+    setValue(index + 1);
+  };
+
+  useEffect(() => {
+    if (isMounted) {
+      handleSubmit();
+    } else {
+      setIsMounted(true);
+    }
+  }, [value]);
 
   if (isPostingResponse) {
     return (
