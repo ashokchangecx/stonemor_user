@@ -226,12 +226,14 @@ const shortSurvey = (props) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    color: value >= index + 1 ? "white" : "#bb1e1e",
                     backgroundColor: value >= index + 1 ? "#bb1e1e" : "white",
                     boxShadow: "0px 2px 6px #ccc",
                     cursor: "pointer",
                     transition: "all 0.3s ease",
                     "&:hover": {
                       backgroundColor: value >= index + 1 ? "white" : "#bb1e1e",
+                      color: value >= index + 1 ? "#bb1e1e" : "white",
                       "& ~ ": {
                         backgroundColor:
                           value >= index + 1 ? "#bb1e1e" : "#eee",
