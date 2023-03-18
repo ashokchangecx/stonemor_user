@@ -4,6 +4,13 @@ import gql from "graphql-tag";
 import { useLocation } from "react-router-dom";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
+  FaRegFrown,
+  FaFrown,
+  FaMeh,
+  FaSmile,
+  FaRegSmile,
+} from "react-icons/fa";
+import {
   getQuestionnaire,
   listResponsess,
   listSurveyEntriess,
@@ -44,6 +51,7 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  Icon,
   Paper,
   Radio,
   RadioGroup,
@@ -189,7 +197,40 @@ const SurveyQuestion = (props) => {
   const [isPostingResponse, setIsPostingResponse] = React.useState(false);
   const [open, setOpen] = React.useState(true);
   const [totalTime, setTotalTime] = useState("");
+
+  const [showLabel, setShowLabel] = useState(false);
+
+  const handleHover = (event) => {
+    setShowLabel(true);
+  };
+
+  const handleMouseLeave = (event) => {
+    setShowLabel(false);
+  };
   //rating//
+  // const customIcons = {
+  //   1: {
+  //     icon: <span style={{ fontSize: "50px" }}>😞</span>,
+  //     label: "Very Dissatisfied",
+  //   },
+  //   2: {
+  //     icon: <span style={{ fontSize: "50px" }}>😔</span>,
+  //     label: "Dissatisfied",
+  //   },
+  //   3: {
+  //     icon: <span style={{ fontSize: "50px" }}>😐</span>,
+  //     label: "Neutral",
+  //   },
+  //   4: {
+  //     icon: <span style={{ fontSize: "50px" }}>😊</span>,
+  //     label: "Satisfied",
+  //   },
+  //   5: {
+  //     icon: <span style={{ fontSize: "50px" }}>😄</span>,
+  //     label: "Very Satisfied",
+  //   },
+  // };
+
   const customIcons = {
     1: {
       icon: (
@@ -529,41 +570,53 @@ const SurveyQuestion = (props) => {
         return (
           <FormControl>
             <Box
-              component="fieldset"
-              mb={3}
-              borderColor="transparent"
-              style={{ margin: "10px 0px", color: "black" }}
+              position="relative"
+              style={{ margin: "50px 0px", color: "black" }}
             >
-              <Typography sx={{ paddingTop: 2 }}>
-                {" "}
-                Q.
-                {q?.qu}
-              </Typography>
-              <Box style={{ margin: "50px 0px", color: "black" }}>
-                <StyledRating
-                  name="customized-icons"
-                  defaultValue={2}
-                  getLabelText={(value) => customIcons[value]?.label}
-                  IconContainerComponent={IconContainer}
-                  value={RatingAns}
-                  onChange={onValueChange}
-                  onChangeActive={(event, newHover) => {
-                    setHover(newHover);
+              <StyledRating
+                name="customized-icons"
+                defaultValue={2}
+                getLabelText={(value) => customIcons[value]?.label}
+                IconContainerComponent={IconContainer}
+                value={RatingAns}
+                onChange={onValueChange}
+                onChangeActive={(event, newHover) => {
+                  setHover(newHover);
+                }}
+                onMouseEnter={() => {
+                  setShowLabel(true);
+                }}
+                onMouseLeave={() => {
+                  setShowLabel(false);
+                }}
+              />
+              {showLabel && (
+                <Box
+                  position="absolute"
+                  left="100%"
+                  top="0"
+                  ml={10}
+                  style={{
+                    color: "red",
+                    fontWeight: 900,
+                    fontSize: "15px",
                   }}
-                />
-                {value !== null && (
-                  <Box
-                    ml={10}
-                    style={{
-                      marginTop: "30px ",
-                      color: "red",
-                      fontWeight: 900,
-                    }}
-                  >
-                    {customIcons[hover]?.label}
-                  </Box>
-                )}
-              </Box>
+                >
+                  {customIcons[hover]?.label}
+                </Box>
+              )}
+              {value !== null && (
+                <Box
+                  ml={10}
+                  style={{
+                    marginTop: "30px",
+                    color: "green",
+                    fontWeight: 900,
+                  }}
+                >
+                  {customIcons[RatingAns]?.label}
+                </Box>
+              )}
             </Box>
           </FormControl>
         );

@@ -211,6 +211,7 @@ export const getQuestionnaire = /* GraphQL */ `
           qu
           type
           isSelf
+          deleted
           isDependent
           listOptions {
             listValue
@@ -297,11 +298,12 @@ export const listQuestionnaires = /* GraphQL */ `
             nextToken
           }
         }
-        question(limit: 200) {
+        question((limit: 200, filter: { deleted: { ne: true } }) {
           items {
             id
             qu
             type
+            deleted
             isSelf
             isDependent
             listOptions {
