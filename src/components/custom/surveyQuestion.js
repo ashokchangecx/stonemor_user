@@ -590,21 +590,21 @@ const SurveyQuestion = (props) => {
                   setShowLabel(false);
                 }}
               />
-              {showLabel && (
+              {/* {showLabel && (
                 <Box
-                  position="absolute"
-                  left="100%"
-                  top="0"
-                  ml={10}
+                  // position="absolute"
+                  // left="100%"
+                  top="2   "
+                  ml={40}
                   style={{
                     color: "red",
-                    fontWeight: 900,
-                    fontSize: "15px",
+                    fontWeight: 600,
+                    fontSize: "11px",
                   }}
                 >
                   {customIcons[hover]?.label}
                 </Box>
-              )}
+              )} */}
               {value !== null && (
                 <Box
                   ml={10}
